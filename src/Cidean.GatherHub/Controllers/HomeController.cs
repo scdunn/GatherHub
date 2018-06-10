@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cidean.GatherHub.Models;
+using Cidean.GatherHub.Core.Data;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -12,7 +13,8 @@ namespace Cidean.GatherHub.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var context = new HubContext();
+            return View(context.Courses.ToList());
         }
 
         public IActionResult About()

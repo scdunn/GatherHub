@@ -9,12 +9,14 @@ namespace Cidean.GatherHub.Core.Data
 {
     public class HubContext:DbContext
     {
+        public HubContext(DbContextOptions<HubContext> options)
+        : base(options)
+        {
+        }
+
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseCategory> CourseCategories { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Filename=./hub.db");
-        }
+     
     }
 }

@@ -11,10 +11,17 @@ namespace Cidean.GatherHub.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly HubContext _context;
+
+        public HomeController(HubContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            var context = new HubContext();
-            return View(context.Courses.ToList());
+            
+            return View(_context.Courses.ToList());
         }
 
         public IActionResult About()

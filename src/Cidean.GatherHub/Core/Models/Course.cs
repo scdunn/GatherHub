@@ -12,7 +12,8 @@ namespace Cidean.GatherHub.Core.Models
         public string Description { get; set; }
         public string Location { get; set; }
         public string MeetingTimes { get; set; }
-        public CourseCategory Category { get; set; }
+        public int CourseCategoryId { get; set; }
+        public virtual CourseCategory Category { get; set; }
 
     }
 }

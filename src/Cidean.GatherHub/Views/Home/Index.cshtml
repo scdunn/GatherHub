@@ -16,10 +16,13 @@
                 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">@course.Title</h3>
+                    <h3 class="panel-title">@course.Title (@course.Category.Title)</h3>
                 </div>
                 <div class="panel-body">
                     @course.Description
+                    <br /><br />
+                          <strong>Location: @course.Location</strong>
+                    <button class="btn btn-primary">Sign-up</button>
                 </div>
             </div>
             }

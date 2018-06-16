@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cidean.GatherHub.Models;
 using Cidean.GatherHub.Core.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -20,8 +21,8 @@ namespace Cidean.GatherHub.Controllers
 
         public IActionResult Index()
         {
-            
-            return View(_context.Courses.ToList());
+
+            return View(_context.Courses.Include(course => course.Category).ToList());
         }
 
         public IActionResult About()

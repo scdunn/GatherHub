@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cidean.GatherHub.Core.Models.Course>
+﻿@model IEnumerable<Cidean.GatherHub.Core.Models.CourseCategory>
 
 
 <p>
@@ -10,15 +10,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Title)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Location)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MeetingTimes)
-                </th>
             <th></th>
         </tr>
     </thead>
@@ -27,15 +18,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MeetingTimes)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

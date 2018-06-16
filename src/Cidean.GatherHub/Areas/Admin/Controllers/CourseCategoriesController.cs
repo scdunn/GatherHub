@@ -11,29 +11,22 @@ using Cidean.GatherHub.Core.Models;
 namespace Cidean.GatherHub.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CoursesController : Controller
+    public class CourseCategoriesController : Controller
     {
         private readonly HubContext _context;
 
-        private async Task SetViewBag()
-        {
-            var courseCategories = await _context.CourseCategories.ToListAsync();
-            ViewBag.CourseCategories = new SelectList(courseCategories, "Id", "Title");
-        }
-
-        public CoursesController(HubContext context)
+        public CourseCategoriesController(HubContext context)
         {
             _context = context;
-
         }
 
-        // GET: Admin/Courses
+        // GET: Admin/CourseCategories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Courses.ToListAsync());
+            return View(await _context.CourseCategories.ToListAsync());
         }
 
-        // GET: Admin/Courses/Details/5
+        // GET: Admin/CourseCategories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,41 +34,39 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses
+            var courseCategory = await _context.CourseCategories
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            if (courseCategory == null)
             {
                 return NotFound();
             }
-            
-            return View(course);
+
+            return View(courseCategory);
         }
 
-        // GET: Admin/Courses/Create
-        public async Task<IActionResult> Create()
+        // GET: Admin/CourseCategories/Create
+        public IActionResult Create()
         {
-            await SetViewBag();
             return View();
         }
 
-        // POST: Admin/Courses/Create
+        // POST: Admin/CourseCategories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Location,MeetingTimes,CourseCategoryId")] Course course)
+        public async Task<IActionResult> Create([Bind("Id,Title")] CourseCategory courseCategory)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(course);
+                _context.Add(courseCategory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            await SetViewBag();
-            return View(course);
+            return View(courseCategory);
         }
 
-        // GET: Admin/Courses/Edit/5
+        // GET: Admin/CourseCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,23 +74,22 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses.SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            var courseCategory = await _context.CourseCategories.SingleOrDefaultAsync(m => m.Id == id);
+            if (courseCategory == null)
             {
                 return NotFound();
             }
-            await SetViewBag();
-            return View(course);
+            return View(courseCategory);
         }
 
-        // POST: Admin/Courses/Edit/5
+        // POST: Admin/CourseCategories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,MeetingTimes,CourseCategoryId")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] CourseCategory courseCategory)
         {
-            if (id != course.Id)
+            if (id != courseCategory.Id)
             {
                 return NotFound();
             }
@@ -108,12 +98,12 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(course);
+                    _context.Update(courseCategory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CourseExists(course.Id))
+                    if (!CourseCategoryExists(courseCategory.Id))
                     {
                         return NotFound();
                     }
@@ -124,11 +114,10 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            await SetViewBag();
-            return View(course);
+            return View(courseCategory);
         }
 
-        // GET: Admin/Courses/Delete/5
+        // GET: Admin/CourseCategories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,30 +125,30 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses
+            var courseCategory = await _context.CourseCategories
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            if (courseCategory == null)
             {
                 return NotFound();
             }
 
-            return View(course);
+            return View(courseCategory);
         }
 
-        // POST: Admin/Courses/Delete/5
+        // POST: Admin/CourseCategories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.Courses.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Courses.Remove(course);
+            var courseCategory = await _context.CourseCategories.SingleOrDefaultAsync(m => m.Id == id);
+            _context.CourseCategories.Remove(courseCategory);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id)
+        private bool CourseCategoryExists(int id)
         {
-            return _context.Courses.Any(e => e.Id == id);
+            return _context.CourseCategories.Any(e => e.Id == id);
         }
     }
 }

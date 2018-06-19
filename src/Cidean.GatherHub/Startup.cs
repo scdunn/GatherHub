@@ -61,7 +61,7 @@ namespace Cidean.GatherHub
             //Delete database, add again and seed
             hubContext.Database.EnsureDeleted();
             hubContext.Database.EnsureCreated();
-            SeedData.SeedDatabase(hubContext);
+            SeedData.SeedDatabase(env,hubContext);
 
 
         }

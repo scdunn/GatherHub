@@ -1,37 +1,45 @@
 ﻿using Cidean.GatherHub.Core.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Core.Data
 {
-    public static class SeedData
-    {
-        public static void SeedDatabase(HubContext context)
+   
+    public static class SeedData {
+
+        public class DataToSeed
         {
-            if(!context.CourseCategories.Any())
+            public List<CourseCategory> Categories;
+            public List<Course> Courses;
+
+        }
+
+
+        public static void SeedDatabase(IHostingEnvironment env,HubContext context)
+        {
+            DataToSeed data;
+
+            using (StreamReader r = new StreamReader(Path.Combine(env.WebRootPath, "data/seed.json")))
             {
-                var courseCategories = new List<CourseCategory>()
-                {
-                    new CourseCategory("Arts and Crafts"),
-                    new CourseCategory("Category B"),
-                    new CourseCategory("Category C")
-                };
-                context.CourseCategories.AddRange(courseCategories);
+                var json = r.ReadToEnd();
+                data = JsonConvert.DeserializeObject<DataToSeed>(json);
+                
+            }
+
+            if (!context.CourseCategories.Any())
+            {
+                context.CourseCategories.AddRange(data.Categories);
             }
 
             if(!context.Courses.Any())
             {
-                var courses = new List<Course>()
-                {
-                    new Course("CALLIGRAPHY FOR BEGINNERS","Calligraphy is a skill that anyone can learn. With individualized instruction, regular practice and dedication, you will be able to reach your goals. Whether you are looking to address invitations for that special day or send a greeting card, calligraphy will enhance the beauty and impact of all your correspondences. This class provides a birds eye view into the world of Calligraphy, its history and the resources for you to continue perfecting your new skill. Learning the Chancery script will provide a great foundation and will help you if you choose to explore additional scripts. ","Flying Dolphin Studio","MWF 1-2",1),
-                    new Course("Course B","","Main Office","MWF 1-2",1),
-                    new Course("Course C","","Main Office","MWF 1-2",2),
-                    new Course("Course D","","Main Office","MWF 1-2",3)
-                };
-                context.Courses.AddRange(courses);
+                context.Courses.AddRange(data.Courses);
             }
 
             context.SaveChanges();

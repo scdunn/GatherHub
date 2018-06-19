@@ -15,5 +15,19 @@ namespace Cidean.GatherHub.Core.Models
         public int CourseCategoryId { get; set; }
         public virtual CourseCategory Category { get; set; }
 
+        public Course()
+        {
+
+        }
+
+        public Course(string title, string description, string location, string meetingTimes, int courseCategoryId)
+        {
+            Title = title;
+            Description = description;
+            Location = location;
+            MeetingTimes = meetingTimes;
+            CourseCategoryId = courseCategoryId;
+        }
+
     }
 }

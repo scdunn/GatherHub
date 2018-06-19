@@ -9,5 +9,15 @@ namespace Cidean.GatherHub.Core.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+
+        public CourseCategory()
+        {
+
+        }
+
+        public CourseCategory(string title)
+        {
+            Title = title;
+        }
     }
 }

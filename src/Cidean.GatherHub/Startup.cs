@@ -32,7 +32,7 @@ namespace Cidean.GatherHub
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, HubContext hubContext)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +57,13 @@ namespace Cidean.GatherHub
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //Delete database, add again and seed
+            hubContext.Database.EnsureDeleted();
+            hubContext.Database.EnsureCreated();
+            SeedData.SeedDatabase(hubContext);
+
+
         }
     }
 }

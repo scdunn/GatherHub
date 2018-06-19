@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  cidean.gatherhub:
+    image: ${DOCKER_REGISTRY}cideangatherhub
+    build:
+      context: .
+      dockerfile: src/Cidean.GatherHub/Dockerfile

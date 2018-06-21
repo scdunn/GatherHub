@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cidean.GatherHub.Core.Data;
+using Cidean.GatherHub.Core.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,30 @@ namespace Cidean.GatherHub
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
-            Configuration = configuration;
+            //load appsettings from json file(s)
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.{environment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            //build configuration
+            Configuration = builder.Build();
+            Environment = environment;
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //load typed appsettings as singleton service
+            services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
  
             services.AddMvc();
 
@@ -32,9 +47,9 @@ namespace Cidean.GatherHub
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, HubContext hubContext)
+        public void Configure(IApplicationBuilder app,  HubContext hubContext, AppSettings appSettings)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
@@ -59,10 +74,12 @@ namespace Cidean.GatherHub
             });
 
             //Delete database, add again and seed
-            hubContext.Database.EnsureDeleted();
-            hubContext.Database.EnsureCreated();
-            SeedData.SeedDatabase(env,hubContext);
-
+            if(appSettings.ResetDatabase)
+            { 
+                hubContext.Database.EnsureDeleted();
+                hubContext.Database.EnsureCreated();
+                SeedData.SeedDatabase(Environment, hubContext);
+            }
 
         }
     }

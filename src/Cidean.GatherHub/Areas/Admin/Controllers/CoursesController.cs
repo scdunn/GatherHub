@@ -13,153 +13,112 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
     [Area("Admin")]
     public class CoursesController : Controller
     {
-        private readonly HubContext _context;
+
+        private readonly IUnitOfWork _work;
 
         private async Task SetViewBag()
         {
-            var courseCategories = await _context.CourseCategories.ToListAsync();
+            var courseCategories = await _work.CourseCategories.GetAll().ToListAsync();
             ViewBag.CourseCategories = new SelectList(courseCategories, "Id", "Title");
         }
 
-        public CoursesController(HubContext context)
+        public CoursesController(IUnitOfWork work)
         {
-            _context = context;
-
+            _work = work;
         }
 
-        // GET: Admin/Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Courses.ToListAsync());
+            return View(await _work.Courses.GetAll().ToListAsync());
         }
 
-        // GET: Admin/Courses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var course = await _context.Courses
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
-            {
-                return NotFound();
-            }
-            
-            return View(course);
-        }
-
-        // GET: Admin/Courses/Create
         public async Task<IActionResult> Create()
         {
             await SetViewBag();
-            return View();
+            return View(nameof(Edit), new Course());
         }
+                
 
-        // POST: Admin/Courses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Location,MeetingTimes,CourseCategoryId")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            await SetViewBag();
-            return View(course);
-        }
-
-        // GET: Admin/Courses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var course = await _context.Courses.SingleOrDefaultAsync(m => m.Id == id);
+            var course = await _work.Courses.GetById(id.Value);
+
             if (course == null)
-            {
                 return NotFound();
-            }
+
             await SetViewBag();
             return View(course);
         }
 
-        // POST: Admin/Courses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,MeetingTimes,CourseCategoryId")] Course course)
         {
+
             if (id != course.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
+                    if (course.Id == 0)
+                        //new course
+                        _work.Courses.Insert(course);
+                    else
+                        //existing course
+                        _work.Courses.Update(course);
+                    
+                    //save
+                    await _work.Save();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!CourseExists(course.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             await SetViewBag();
             return View(course);
         }
 
-        // GET: Admin/Courses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var course = await _context.Courses
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var course = await _work.Courses.GetById(id.Value);
+
             if (course == null)
-            {
                 return NotFound();
-            }
 
             return View(course);
         }
 
-        // POST: Admin/Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.Courses.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
+            var course = await _work.Courses.GetById(id);
+            _work.Courses.Delete(course);
+            await _work.Save();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool CourseExists(int id)
         {
-            return _context.Courses.Any(e => e.Id == id);
+            return (_work.Courses.GetById(id).Result != null);
+
         }
     }
 }

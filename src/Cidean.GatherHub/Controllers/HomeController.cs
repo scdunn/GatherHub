@@ -7,22 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Cidean.GatherHub.Models;
 using Cidean.GatherHub.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using Cidean.GatherHub.Core.Models;
 
 namespace Cidean.GatherHub.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HubContext _context;
+        private readonly IUnitOfWork _work;
 
-        public HomeController(HubContext context)
+        public HomeController(IUnitOfWork work)
         {
-            _context = context;
+            _work = work;
         }
 
         public IActionResult Index()
         {
-
-            return View(_context.Courses.Include(course => course.Category).ToList());
+            return View(_work.Courses.GetAll().Include(course => course.Category));
         }
 
         public IActionResult About()

@@ -29,6 +29,8 @@ namespace Cidean.GatherHub
             //build configuration
             Configuration = builder.Build();
             Environment = environment;
+
+           
         }
 
         
@@ -38,7 +40,8 @@ namespace Cidean.GatherHub
         {
             //load typed appsettings as singleton service
             services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
- 
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             services.AddMvc();
 
             services.AddDbContext<HubContext>(options =>

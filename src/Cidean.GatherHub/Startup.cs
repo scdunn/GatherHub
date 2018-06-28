@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cidean.GatherHub.Core.Data;
 using Cidean.GatherHub.Core.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +40,14 @@ namespace Cidean.GatherHub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options =>
+                    {
+                        options.LoginPath = new PathString("/admin/auth/signin");
+                        options.AccessDeniedPath = new PathString("/admin/auth/denied");
+                    });
+
             //load typed appsettings as singleton service
             services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -52,6 +62,8 @@ namespace Cidean.GatherHub
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,  HubContext hubContext, AppSettings appSettings)
         {
+            app.UseAuthentication();
+
             if (Environment.IsDevelopment())
             {
                 app.UseBrowserLink();

@@ -13,142 +13,105 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
     [Area("Admin")]
     public class CourseCategoriesController : Controller
     {
-        private readonly HubContext _context;
 
-        public CourseCategoriesController(HubContext context)
+        private readonly IUnitOfWork _work;
+
+
+        public CourseCategoriesController(IUnitOfWork work)
         {
-            _context = context;
+            _work = work;
         }
 
-        // GET: Admin/CourseCategories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CourseCategories.ToListAsync());
+            return View(await _work.CourseCategories.GetAll().ToListAsync());
         }
 
-        // GET: Admin/CourseCategories/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+        public async Task<IActionResult> Create()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var courseCategory = await _context.CourseCategories
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (courseCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(courseCategory);
+            return View(nameof(Edit), new CourseCategory());
         }
 
-        // GET: Admin/CourseCategories/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Admin/CourseCategories/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title")] CourseCategory courseCategory)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(courseCategory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(courseCategory);
-        }
-
-        // GET: Admin/CourseCategories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var courseCategory = await _context.CourseCategories.SingleOrDefaultAsync(m => m.Id == id);
+            var courseCategory = await _work.CourseCategories.GetById(id.Value);
+
             if (courseCategory == null)
-            {
                 return NotFound();
-            }
+
             return View(courseCategory);
         }
 
-        // POST: Admin/CourseCategories/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] CourseCategory courseCategory)
         {
+
             if (id != courseCategory.Id)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(courseCategory);
-                    await _context.SaveChangesAsync();
+                    if (courseCategory.Id == 0)
+                        //new course
+                        _work.CourseCategories.Insert(courseCategory);
+                    else
+                        //existing course
+                        _work.CourseCategories.Update(courseCategory);
+
+                    //save
+                    await _work.Save();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!CourseCategoryExists(courseCategory.Id))
-                    {
                         return NotFound();
-                    }
                     else
-                    {
                         throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+
             return View(courseCategory);
         }
 
-        // GET: Admin/CourseCategories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var courseCategory = await _context.CourseCategories
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var courseCategory = await _work.CourseCategories.GetById(id.Value);
+
             if (courseCategory == null)
-            {
                 return NotFound();
-            }
 
             return View(courseCategory);
         }
 
-        // POST: Admin/CourseCategories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var courseCategory = await _context.CourseCategories.SingleOrDefaultAsync(m => m.Id == id);
-            _context.CourseCategories.Remove(courseCategory);
-            await _context.SaveChangesAsync();
+            var courseCategory = await _work.CourseCategories.GetById(id);
+            _work.CourseCategories.Delete(courseCategory);
+            await _work.Save();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool CourseCategoryExists(int id)
         {
-            return _context.CourseCategories.Any(e => e.Id == id);
+            return (_work.CourseCategories.GetById(id).Result != null);
+
         }
     }
 }

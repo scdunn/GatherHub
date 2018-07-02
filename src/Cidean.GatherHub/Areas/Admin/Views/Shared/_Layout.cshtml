@@ -30,7 +30,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Signout</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="admin" asp-controller="Auth" asp-action="SignOut">Sign Out @User.Identity.Name</a></li>
+                    }
+                    else
+                    {
+                    <li><a asp-area="admin" asp-controller="Auth" asp-action="SignIn">Sign In</a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -38,10 +45,13 @@
     <div class="container body-content">
 
         <div class="col-sm-3">
-            <ul class="nav nav-pills nav-stacked">
-                <li><a asp-area="admin" asp-controller="Courses" asp-action="Index">Courses</a></li>
-                <li><a asp-area="admin" asp-controller="CourseCategories" asp-action="Index">Course Categories</a></li>
-            </ul>
+            @if (User.Identity.IsAuthenticated)
+            { 
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a asp-area="admin" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                    <li><a asp-area="admin" asp-controller="CourseCategories" asp-action="Index">Course Categories</a></li>
+                </ul>
+            }
         </div>
         <div class="col-sm-9">
             @RenderBody()

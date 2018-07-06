@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cidean.GatherHub.Core.Data;
 using Cidean.GatherHub.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cidean.GatherHub.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CoursesController : Controller
     {
 

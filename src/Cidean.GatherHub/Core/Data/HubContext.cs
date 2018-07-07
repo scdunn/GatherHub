@@ -16,7 +16,18 @@ namespace Cidean.GatherHub.Core.Data
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseCategory> CourseCategories { get; set; }
+        public DbSet<AdminUser> AdminUsers { get; set; }
 
-     
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new AdminUser.AdminConfig());
+                
+        }
+
+
     }
+
 }

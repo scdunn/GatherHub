@@ -32,6 +32,13 @@ namespace Cidean.GatherHub.Core.Data
                 
             }
 
+            if(!context.AdminUsers.Any())
+            {
+                
+                
+                context.AdminUsers.Add(new AdminUser("admin","password"));
+            }
+
             if (!context.CourseCategories.Any())
             {
                 context.CourseCategories.AddRange(data.Categories);

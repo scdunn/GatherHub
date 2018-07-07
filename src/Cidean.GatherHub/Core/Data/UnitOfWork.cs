@@ -12,6 +12,8 @@ namespace Cidean.GatherHub.Core.Data
         private readonly HubContext _hubContext;
         public IRepository<Course> Courses { get; private set; }
         public IRepository<CourseCategory> CourseCategories { get; private set; }
+        public IRepository<AdminUser> AdminUsers { get; private set; }
+
 
         public UnitOfWork(HubContext hubContext)
         {
@@ -19,6 +21,7 @@ namespace Cidean.GatherHub.Core.Data
             this._hubContext = hubContext;
             Courses = new Repository<Course>(_hubContext);
             CourseCategories = new Repository<CourseCategory>(_hubContext);
+            AdminUsers = new Repository<AdminUser>(_hubContext);
         }
 
         public async Task Save()

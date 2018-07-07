@@ -7,6 +7,7 @@ namespace Cidean.GatherHub.Core.Data
     {
         IRepository<Course> Courses { get; }
         IRepository<CourseCategory> CourseCategories { get; }
+        IRepository<AdminUser> AdminUsers { get; }
 
         Task Save();
         void Dispose();

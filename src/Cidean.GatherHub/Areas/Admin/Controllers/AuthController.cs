@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Cidean.GatherHub.Core.Data;
+using Cidean.GatherHub.Core.Models;
 using Cidean.GatherHub.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,6 +15,12 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
     [Area("Admin")]
     public class AuthController : Controller
     {
+        private readonly IUnitOfWork _work;
+
+        public AuthController(IUnitOfWork work)
+        {
+            _work = work;
+        }
 
         public IActionResult SignIn()
         {
@@ -26,21 +34,28 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
             {
                 return View();
             }
-            if (!(signInModel.Username == "admin" && signInModel.Password == "pass"))
+
+            AdminUser user = _work.AdminUsers.GetAll().SingleOrDefault(m => m.Username == signInModel.Username);
+            bool isValid = true;
+            if (user == null)
+                isValid = false;
+            else if(!user.IsValidPassword(signInModel.Password))
+                isValid = false;
+
+            //invalid sign in
+            if(!isValid)
             {
                 ModelState.AddModelError(string.Empty, "Invalid Username and/or Password.");
                 signInModel.IsValid = false;
                 return View(signInModel);
             }
 
-            if (signInModel.Username == "admin" && signInModel.Password == "pass")
+            //valid sign in
+            if (isValid)
             {
-
-
-
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, "admin", ClaimValueTypes.String, "GatherHub")
+                    new Claim(ClaimTypes.Name, user.Username , ClaimValueTypes.String, "GatherHub")
                 };
 
                 var identity = new ClaimsIdentity(claims, "Password");

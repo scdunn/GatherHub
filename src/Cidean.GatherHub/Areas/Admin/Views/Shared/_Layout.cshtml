@@ -42,23 +42,26 @@
             </div>
         </div>
     </nav>
+    <br/>
     <div class="container body-content">
 
         <div class="col-sm-3">
             @if (User.Identity.IsAuthenticated)
             { 
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a asp-area="admin" asp-controller="Courses" asp-action="Index">Courses</a></li>
-                    <li><a asp-area="admin" asp-controller="CourseCategories" asp-action="Index">Course Categories</a></li>
-                </ul>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a asp-area="admin" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                <li><a asp-area="admin" asp-controller="CourseCategories" asp-action="Index">Course Categories</a></li>
+                <li><a asp-area="admin" asp-controller="AdminUsers" asp-action="Index">Admin Users</a></li>
+
+            </ul>
             }
         </div>
         <div class="col-sm-9">
             @RenderBody()
         </div>
 
-        <hr />
-        <footer>
+
+        <footer class="text-center">
             <p>&copy; 2019 - Cidean.GatherHub</p>
         </footer>
     </div>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +22,10 @@ namespace Cidean.GatherHub.Core.Models
 
         [Required, MaxLength(100)]
         private string Password { get; set; }
+
+        [MaxLength(30), NotMapped]
+        public string TempPassword { get; set; }
+        
 
         public AdminUser()
         {

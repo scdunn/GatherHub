@@ -10,9 +10,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Cidean.GatherHub.Areas.Admin.Controllers
+namespace Cidean.GatherHub.Controllers
 {
-    [Area("Admin")]
     public class AuthController : Controller
     {
         private readonly IUnitOfWork _work;
@@ -35,7 +34,7 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                 return View();
             }
 
-            AdminUser user = _work.AdminUsers.GetAll().SingleOrDefault(m => m.Username == signInModel.Username);
+            Member user = _work.Members.GetAll().SingleOrDefault(m => m.EmailAddress == signInModel.Username);
             bool isValid = true;
             if (user == null)
                 isValid = false;
@@ -55,13 +54,13 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Username , ClaimValueTypes.String, "GatherHub")
+                    new Claim(ClaimTypes.Name, user.EmailAddress , ClaimValueTypes.String, "GatherHub")
                 };
 
                 var identity = new ClaimsIdentity(claims, "Password");
                 var principal = new ClaimsPrincipal(identity);
 
-                await HttpContext.SignInAsync("admin",
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     principal,
                     new AuthenticationProperties
                     {
@@ -82,7 +81,7 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
 
         public async Task<IActionResult> SignOut()
         {
-            await HttpContext.SignOutAsync("admin");
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction(nameof(SignIn));
         }
 

@@ -40,12 +40,23 @@ namespace Cidean.GatherHub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                 .AddCookie("admin",
                     options =>
                     {
                         options.LoginPath = new PathString("/admin/auth/signin");
                         options.AccessDeniedPath = new PathString("/admin/auth/denied");
+                        options.Cookie.Name = "AdminCookieAuth";
+
+                    })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options =>
+                    {
+                        options.LoginPath = new PathString("/auth/signin");
+                        options.AccessDeniedPath = new PathString("/auth/denied");
+                        options.Cookie.Name = "ClientCookieAuth";
                     });
 
             //load typed appsettings as singleton service

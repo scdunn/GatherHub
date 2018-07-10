@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Cidean.GatherHub.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "admin")]
     public class AdminUsersController : Controller
     {
 

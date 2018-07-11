@@ -22,7 +22,9 @@ namespace Cidean.GatherHub.Controllers
 
         public IActionResult Index()
         {
-            return View(_work.Courses.GetAll().Include(course => course.Category));
+            return View(_work.Courses.GetAll()
+                .Include(course => course.Category)
+                .Include(course=>course.Instructor));
         }
 
         public IActionResult About()

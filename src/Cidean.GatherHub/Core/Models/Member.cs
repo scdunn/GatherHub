@@ -19,7 +19,22 @@ namespace Cidean.GatherHub.Core.Models
         public string EmailAddress { get; set; }
         private string Password { get; set; }
         public string TempPassword { get; set; }
-        
+
+        public string FullName { get { return FirstName + " " + LastName; } }
+
+
+        public Member()
+        {
+
+        }
+
+        public Member(string emailAddress, string firstName, string lastName, string password)
+        {
+            EmailAddress = emailAddress;
+            FirstName = firstName;
+            LastName = lastName;
+            SetPassword(password);
+        }
 
         public void SetPassword(string value)
         {

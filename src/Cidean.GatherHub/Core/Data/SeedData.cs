@@ -38,13 +38,23 @@ namespace Cidean.GatherHub.Core.Data
                 
                 context.AdminUsers.Add(new AdminUser("admin","password"));
             }
+            if (!context.Members.Any())
+            {
 
+
+                context.Members.Add(new Member("chris@cidean.com","Chris","Dunn", "password"));
+            }
+
+            
             if (!context.CourseCategories.Any())
             {
                 context.CourseCategories.AddRange(data.Categories);
             }
 
-            if(!context.Courses.Any())
+            context.SaveChanges();
+
+
+            if (!context.Courses.Any())
             {
                 context.Courses.AddRange(data.Courses);
             }

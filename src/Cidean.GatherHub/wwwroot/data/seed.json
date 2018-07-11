@@ -9,14 +9,15 @@
       "title": "INTRO TO CLIMBING",
       "location": "Brooklyn Boulders Chicago",
       "courseCategoryId": 2,
-      "description": "Intro to Climbing takes the intimidation out of the walls with our CWI-certified instructor-led sessions to teach the basics of bouldering. In a small group setting, you'll receive the attention you need to start from ground zero and reach the top, introducing you to technique and problem-solving. There is designed in some time to rest between climbing to allow for questions, recovery, and learning. Please note, this is a special price not available to non-members and has been offered exclusively to the Dabble community."
-
+      "description": "Intro to Climbing takes the intimidation out of the walls with our CWI-certified instructor-led sessions to teach the basics of bouldering. In a small group setting, you'll receive the attention you need to start from ground zero and reach the top, introducing you to technique and problem-solving. There is designed in some time to rest between climbing to allow for questions, recovery, and learning. Please note, this is a special price not available to non-members and has been offered exclusively to the Dabble community.",
+      "instructorId": 1
     },
     {
       "title": "CALLIGRAPHY FOR BEGINNERS",
       "location": "Flying Dolphin Studio",
       "courseCategoryId": 1,
-      "description": "Calligraphy is a skill that anyone can learn. With individualized instruction, regular practice and dedication, you will be able to reach your goals. Whether you are looking to address invitations for that special day or send a greeting card, calligraphy will enhance the beauty and impact of all your correspondences. This class provides a birds eye view into the world of Calligraphy, its history and the resources for you to continue perfecting your new skill. Learning the Chancery script will provide a great foundation and will help you if you choose to explore additional scripts. "
+      "description": "Calligraphy is a skill that anyone can learn. With individualized instruction, regular practice and dedication, you will be able to reach your goals. Whether you are looking to address invitations for that special day or send a greeting card, calligraphy will enhance the beauty and impact of all your correspondences. This class provides a birds eye view into the world of Calligraphy, its history and the resources for you to continue perfecting your new skill. Learning the Chancery script will provide a great foundation and will help you if you choose to explore additional scripts. ",
+      "instructorId": 1
     }
   ]
 }

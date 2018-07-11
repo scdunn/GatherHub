@@ -20,8 +20,10 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
 
         private async Task SetViewBag()
         {
-            var courseCategories = await _work.CourseCategories.GetAll().ToListAsync();
-            ViewBag.CourseCategories = new SelectList(courseCategories, "Id", "Title");
+
+            ViewBag.CourseCategories = new SelectList(await _work.CourseCategories.GetAll().ToListAsync(), "Id", "Title");
+            ViewBag.Instructors = new SelectList(await _work.Members.GetAll().ToListAsync(), "Id","FullName");
+
         }
 
         public CoursesController(IUnitOfWork work)
@@ -58,7 +60,7 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,MeetingTimes,CourseCategoryId")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,MeetingTimes,CourseCategoryId,InstructorId")] Course course)
         {
 
             if (id != course.Id)

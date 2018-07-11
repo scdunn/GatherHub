@@ -25,7 +25,8 @@ namespace Cidean.GatherHub.Core.Data
 
             modelBuilder.ApplyConfiguration(new AdminUser.AdminConfig());
             modelBuilder.ApplyConfiguration(new Member.MemberConfig());
-                
+            modelBuilder.ApplyConfiguration(new Course.CourseConfig());
+
         }
 
 

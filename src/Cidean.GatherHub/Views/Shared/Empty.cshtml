@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Cidean.GatherHub</title>
+    <title>@ViewData["Title"] - Gather Hub</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -17,40 +17,13 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Cidean.GatherHub</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-controller="Auth" asp-action="SignOut">Sign Out @User.Identity.Name</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Auth" asp-action="SignIn">Sign In</a></li>
-
-
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
+ 
     <div class="container body-content">
+
         @RenderBody()
-        <hr />
-        <footer class="center-block">
+
+       
+        <footer class="text-center">
             <p>&copy; 2019 - Cidean.GatherHub</p>
         </footer>
     </div>
@@ -77,5 +50,6 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 </body>
 </html>

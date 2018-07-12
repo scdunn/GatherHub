@@ -27,6 +27,51 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\admin\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\admin\font-awesome\less\bordered-pulled.less" />
+    <None Include="wwwroot\admin\font-awesome\less\core.less" />
+    <None Include="wwwroot\admin\font-awesome\less\fixed-width.less" />
+    <None Include="wwwroot\admin\font-awesome\less\font-awesome.less" />
+    <None Include="wwwroot\admin\font-awesome\less\icons.less" />
+    <None Include="wwwroot\admin\font-awesome\less\larger.less" />
+    <None Include="wwwroot\admin\font-awesome\less\list.less" />
+    <None Include="wwwroot\admin\font-awesome\less\mixins.less" />
+    <None Include="wwwroot\admin\font-awesome\less\path.less" />
+    <None Include="wwwroot\admin\font-awesome\less\rotated-flipped.less" />
+    <None Include="wwwroot\admin\font-awesome\less\spinning.less" />
+    <None Include="wwwroot\admin\font-awesome\less\stacked.less" />
+    <None Include="wwwroot\admin\font-awesome\less\variables.less" />
+    <None Include="wwwroot\admin\font-awesome\scss\font-awesome.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_core.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_fixed-width.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_icons.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_larger.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_list.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_mixins.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_path.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_spinning.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_stacked.scss" />
+    <None Include="wwwroot\admin\font-awesome\scss\_variables.scss" />
+    <None Include="wwwroot\admin\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\admin\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\admin\js\bootstrap.js" />
+    <None Include="wwwroot\admin\js\bootstrap.min.js" />
+    <None Include="wwwroot\admin\js\jquery.js" />
+    <None Include="wwwroot\admin\js\plugins\flot\excanvas.min.js" />
+    <None Include="wwwroot\admin\js\plugins\flot\flot-data.js" />
+    <None Include="wwwroot\admin\js\plugins\flot\jquery.flot.js" />
+    <None Include="wwwroot\admin\js\plugins\flot\jquery.flot.pie.js" />
+    <None Include="wwwroot\admin\js\plugins\flot\jquery.flot.resize.js" />
+    <None Include="wwwroot\admin\js\plugins\flot\jquery.flot.tooltip.min.js" />
+    <None Include="wwwroot\admin\js\plugins\morris\morris-data.js" />
+    <None Include="wwwroot\admin\js\plugins\morris\morris.js" />
+    <None Include="wwwroot\admin\js\plugins\morris\morris.min.js" />
+    <None Include="wwwroot\admin\js\plugins\morris\raphael.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Areas\Admin\Views\Members\Delete.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -51,10 +96,22 @@
     <Content Update="Areas\Admin\Views\Shared\Empty.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Admin\Views\Shared\_Layout2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Auth\Denied.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Auth\SignIn.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Empty.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>

@@ -1,12 +1,27 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"] - Gather Hub</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+        <!-- Bootstrap Core CSS -->
+        <link href="~/admin/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="~/admin/css/sb-admin.css" rel="stylesheet">
+        <!-- Morris Charts CSS -->
+        <link href="~/admin/css/plugins/morris.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="~/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -17,39 +32,45 @@
     </environment>
 </head>
 <body>
- 
-    <div class="container body-content">
+    <div id="wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+                </div>
+            </div>
+            <!-- /#wrapper -->
 
-        @RenderBody()
+            <environment include="Development">
 
-       
-        <footer class="text-center">
-            <p>&copy; 2019 - Cidean.GatherHub</p>
-        </footer>
-    </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+                <!-- jQuery -->
+                <script src="~/admin/js/jquery.js"></script>
+                <!-- Bootstrap Core JavaScript -->
+                <script src="~/admin/js/bootstrap.min.js"></script>
+                <!-- Morris Charts JavaScript -->
+                <script src="~/admin/js/plugins/morris/raphael.min.js"></script>
+                <script src="~/admin/js/plugins/morris/morris.min.js"></script>
+                <script src="~/admin/js/plugins/morris/morris-data.js"></script>
 
-    @RenderSection("Scripts", required: false)
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+                <script src="~/js/site.js" asp-append-version="true"></script>
+            </environment>
+            <environment exclude="Development">
+                <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                        asp-fallback-test="window.jQuery"
+                        crossorigin="anonymous"
+                        integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+                </script>
+                <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                        crossorigin="anonymous"
+                        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+                </script>
+                <script src="~/js/site.min.js" asp-append-version="true"></script>
+            </environment>
+
+            @RenderSection("Scripts", required: false)
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 </body>
 </html>

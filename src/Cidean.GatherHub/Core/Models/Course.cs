@@ -23,12 +23,15 @@ namespace Cidean.GatherHub.Core.Models
         public int InstructorId { get; set; }
         public virtual Member Instructor { get; set; }
 
+
+        public virtual ICollection<CourseMember> CourseMembers { get; set; }
+
         public Course()
         {
-
+            CourseMembers = new List<CourseMember>();
         }
 
-        public Course(string title, string description, string location, string meetingTimes, int courseCategoryId, int instructorId)
+        public Course(string title, string description, string location, string meetingTimes, int courseCategoryId, int instructorId):this()
         {
             Title = title;
             Description = description;
@@ -36,6 +39,12 @@ namespace Cidean.GatherHub.Core.Models
             MeetingTimes = meetingTimes;
             CourseCategoryId = courseCategoryId;
             InstructorId = instructorId;
+        }
+
+
+        public void AddMember(int memberId)
+        {
+            CourseMembers.Add(new CourseMember() { CourseId = Id, MemberId = memberId });
         }
 
         public class CourseConfig : IEntityTypeConfiguration<Course>

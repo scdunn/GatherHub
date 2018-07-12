@@ -19,6 +19,8 @@ namespace Cidean.GatherHub.Core.Data
         public DbSet<AdminUser> AdminUsers { get; set; }
         public DbSet<Member> Members { get; set; }
 
+        public DbSet<CourseMember> CourseMembers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -26,6 +28,11 @@ namespace Cidean.GatherHub.Core.Data
             modelBuilder.ApplyConfiguration(new AdminUser.AdminConfig());
             modelBuilder.ApplyConfiguration(new Member.MemberConfig());
             modelBuilder.ApplyConfiguration(new Course.CourseConfig());
+            modelBuilder.ApplyConfiguration(new CourseMember.CourseMemberConfig());
+
+
+
+
 
         }
 

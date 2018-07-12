@@ -43,6 +43,8 @@ namespace Cidean.GatherHub.Core.Data
 
 
                 context.Members.Add(new Member("chris@cidean.com","Chris","Dunn", "password"));
+                context.Members.Add(new Member("megan@cidean.com", "Megan", "Dunn", "password"));
+                context.Members.Add(new Member("abby@cidean.com", "Abby", "Dunn", "password"));
             }
 
             
@@ -56,10 +58,23 @@ namespace Cidean.GatherHub.Core.Data
 
             if (!context.Courses.Any())
             {
+
+                foreach(var course in data.Courses)
+                {
+                    foreach(var member in context.Members)
+                    {
+                        course.AddMember(member.Id);
+                    }
+                }
+
+
                 context.Courses.AddRange(data.Courses);
             }
 
             context.SaveChanges();
+
+
+          
 
         }
     }

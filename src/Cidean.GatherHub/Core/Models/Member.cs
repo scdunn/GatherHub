@@ -22,13 +22,19 @@ namespace Cidean.GatherHub.Core.Models
 
         public string FullName { get { return FirstName + " " + LastName; } }
 
+        public ICollection<CourseMember> CourseMembers { get; set; }
 
         public Member()
         {
-
+            CourseMembers = new List<CourseMember>();
         }
 
-        public Member(string emailAddress, string firstName, string lastName, string password)
+        public void AddCourse(int courseId)
+        {
+            CourseMembers.Add(new CourseMember() { MemberId = Id, CourseId = courseId });
+        }
+
+        public Member(string emailAddress, string firstName, string lastName, string password):this()
         {
             EmailAddress = emailAddress;
             FirstName = firstName;

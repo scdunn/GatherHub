@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Cidean.GatherHub.Models;
 using Cidean.GatherHub.Core.Data;
 using Microsoft.EntityFrameworkCore;
-using Cidean.GatherHub.Core.Models;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -24,7 +19,11 @@ namespace Cidean.GatherHub.Controllers
         {
             return View(_work.Courses.GetAll()
                 .Include(course => course.Category)
-                .Include(course=>course.Instructor));
+                .Include(course => course.Instructor)
+                .Include(course => course.CourseMembers)
+                .ThenInclude(m => m.Member));
+                
+
         }
 
         public IActionResult About()

@@ -33,7 +33,10 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _work.Courses.GetAll().ToListAsync());
+            return View(await _work.Courses.GetAll()
+                .Include(m=>m.CourseMembers)
+                .ThenInclude(m=>m.Member)
+                .ToListAsync());
         }
 
 

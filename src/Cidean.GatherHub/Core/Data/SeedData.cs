@@ -58,7 +58,7 @@ namespace Cidean.GatherHub.Core.Data
 
             if (!context.Courses.Any())
             {
-
+                /*
                 foreach(var course in data.Courses)
                 {
                     foreach(var member in context.Members)
@@ -66,7 +66,7 @@ namespace Cidean.GatherHub.Core.Data
                         course.AddMember(member.Id);
                     }
                 }
-
+                */
 
                 context.Courses.AddRange(data.Courses);
             }

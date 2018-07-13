@@ -1,0 +1,17 @@
+﻿@model Cidean.GatherHub.Core.Models.Registration
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        @foreach (var course in Model.Courses)
+        {
+            <p>@course.Title</p>
+
+        }
+
+        <a asp-controller="register" asp-action="verify" class="btn btn-primary">Complete</a>
+    </div>
+</div>

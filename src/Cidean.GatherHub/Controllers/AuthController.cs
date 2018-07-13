@@ -21,13 +21,15 @@ namespace Cidean.GatherHub.Controllers
             _work = work;
         }
 
-        public IActionResult SignIn()
+        public IActionResult SignIn(string returnUrl)
         {
-            return View();
+            var signInModel = new SignInModel() { ReturnUrl = returnUrl };
+
+            return View(signInModel);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn([Bind("Username","Password")] SignInModel signInModel)
+        public async Task<IActionResult> SignIn([Bind("Username","Password", "ReturnUrl")] SignInModel signInModel)
         {
             if(!ModelState.IsValid)
             {
@@ -54,7 +56,8 @@ namespace Cidean.GatherHub.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.EmailAddress , ClaimValueTypes.String, "GatherHub")
+                    new Claim(ClaimTypes.Name, user.EmailAddress , ClaimValueTypes.String, "GatherHub"),
+                    new Claim("id", user.Id.ToString() , ClaimValueTypes.String, "GatherHub")
                 };
 
                 var identity = new ClaimsIdentity(claims, "Password");
@@ -69,7 +72,9 @@ namespace Cidean.GatherHub.Controllers
                         IsPersistent = false
                     });
 
-                
+                if (!string.IsNullOrEmpty(signInModel.ReturnUrl))
+                    return Redirect(signInModel.ReturnUrl);
+
                 return RedirectToAction("Index", "Home");
                 
             }

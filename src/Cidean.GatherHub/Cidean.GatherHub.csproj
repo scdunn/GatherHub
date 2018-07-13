@@ -111,6 +111,12 @@
     <Content Update="Views\Auth\SignIn.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Register\Confirmation.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Register\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\Empty.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -24,7 +24,7 @@
                     <strong>Location: @course.Location</strong>
                     @course.Instructor.FullName
 
-                    <button class="btn btn-primary">Sign-up</button>
+                    <a class="btn btn-primary" asp-controller="register" asp-action="course" asp-route-id="@course.Id">Register for Course</a>
                 </div>
             </div>
             }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Cidean.GatherHub.Core.Helpers;
 using Cidean.GatherHub.Core.Models;
 using Cidean.GatherHub.Core.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -48,8 +49,10 @@ namespace Cidean.GatherHub.Controllers
             //check for existing course registration to prevent duplicates
             if (registration.Courses.Any(p => p.Id == id.Value))
                 return RedirectToAction(nameof(Index));
-            
-            var course = await _work.Courses.GetById(id.Value);
+
+            var course = _work.Courses.GetAll()
+                .Include(p => p.Instructor)
+                .Single(p => p.Id == id.Value);
 
             registration.Courses.Add(course);
 
@@ -81,6 +84,8 @@ namespace Cidean.GatherHub.Controllers
                 member.AddCourse(course.Id);
 
            await _work.Save();
+
+            HttpContext.Session.Remove("REG");
 
             return RedirectToAction(nameof(Confirmation));
         }

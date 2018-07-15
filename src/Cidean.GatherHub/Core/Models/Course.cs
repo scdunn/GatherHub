@@ -24,6 +24,14 @@ namespace Cidean.GatherHub.Core.Models
         public virtual Member Instructor { get; set; }
 
 
+        public string ShortDescription {
+            get {
+                if (Description.Length > 256)
+                    return Description.Substring(0, 256);
+                return Description;
+
+            } }
+
         public virtual ICollection<CourseMember> CourseMembers { get; set; }
 
         public Course()

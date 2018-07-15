@@ -1,0 +1,27 @@
+﻿@model Cidean.GatherHub.Core.Models.Course;
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h1>@Model.Title</h1>
+        <p>
+            @Model.Description
+        </p>
+        <p>
+            <strong>Instructor:</strong> @Model.Instructor.FullName
+        </p>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a asp-controller="register" asp-action="course" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Register</a>
+                <div class="row"><div class="col-md-12"><strong>Location:</strong><br/>@Model.Location</div></div>
+                <div class="row"><div class="col-md-12"><strong>Category:</strong><br />@Model.Category.Title</div></div>
+            </div>
+        </div>
+
+    </div>
+</div>

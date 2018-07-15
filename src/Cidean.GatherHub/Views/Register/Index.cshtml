@@ -5,13 +5,25 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Course</th>
+                    <th>Instructor</th>
+                    <th>Location</th>
+                    <th>Meeting Time(s)</th>
+                </tr>
 
+
+        
         @foreach (var course in Model.Courses)
         {
-            <p>@course.Title</p>
+            <tr><td>@course.Title</td><td>@course.Instructor.FullName</td><td>@course.Location</td><td>@course.MeetingTimes</td></tr>
 
         }
 
+        </table>
+</div>
         <a asp-controller="register" asp-action="verify" class="btn btn-primary">Complete</a>
     </div>
 </div>

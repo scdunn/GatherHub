@@ -18,6 +18,48 @@
       "courseCategoryId": 1,
       "description": "Calligraphy is a skill that anyone can learn. With individualized instruction, regular practice and dedication, you will be able to reach your goals. Whether you are looking to address invitations for that special day or send a greeting card, calligraphy will enhance the beauty and impact of all your correspondences. This class provides a birds eye view into the world of Calligraphy, its history and the resources for you to continue perfecting your new skill. Learning the Chancery script will provide a great foundation and will help you if you choose to explore additional scripts. ",
       "instructorId": 1
+    },
+    {
+      "title": "PASTA 101",
+      "location": "Lakeview Kitchen and Market",
+      "courseCategoryId": 1,
+      "description": "Join Phillipe Sobon, a self-taught chef living in Chicago, to learn how to make fresh pasta for your family and friends. He will be teaching you how to make 3 different types of pasta from scratch, how to incorporate a healthy twist into each one, show you how to make fresh ricotta and a delicious sauce using ingredients already in the pantry. Phillipe has been a finalist on Masterchef Season 5, a contestant on Food Network's Cooks vs. Cons Season 2, appeared on LIVE with Kelly & Ryan, USA Today, WGN, a finalist for World Food Championships 2017, HMS Host 2017 finalist and has worked with Fabio Viviani and Graham Elliot. Has also cooked for Scott Conant, Geoffrey Zakarian and Lorena Garcia. As a bonus, Phillipe will be offering 50% off his private dinners and catering packages. BYOB!",
+      "instructorId": 1
+    },
+    {
+      "title": "PODCASTING 101 EXTENDED EDITION",
+      "location": "Dynasty Podcasts Home Studio",
+      "courseCategoryId": 1,
+      "description": "Want to start your own podcast, but you're not sure where to start? This three-hour course will take you through the podcasting process from start to finish! Find out how to choose the topic of your podcast, recording and editing techniques, the steps necessary to publish your podcast on platforms like iTunes, and more. The course will also include a recording and editing session, where you gain hands-on podcasting experience! Each attendee will leave with the knowledge necessary to launch their own podcast. This extended edition of the course also covers additional apps, websites, software, and hardware for recording, editing, and publishing your podcast, allowing you the ability to create a podcast just about anywhere. Course instructor Jaime Black has been podcasting for over a decade and working in broadcast for over two decades. In 2005, he launched Dynasty Podcasts, the first ever and longest-running music podcast in the City of Chicago’s history. During that time, he has produced over 1,000 podcast episodes. He also teaches entrepreneurship and freelancing for artists and creatives at Columbia College Chicago. You are welcome to bring a notebook or laptop to take notes. I will provide mics and recording equipment. Also, I do have two cats. So if you have pet allergies, this workshop might not be for you. This workshop will take place at Dynasty Podcasts Home Studio. No additional destinations are involved. This demonstrates how podcasting can be done from the comfort of your own home.",
+      "instructorId": 1
+    },
+    {
+      "title": "INTRO TO WELDING",
+      "location": "Fire Arts Center of Chicago",
+      "courseCategoryId": 1,
+      "description": "n this class, students will learn basic techniques for welding steel. A standard vocational welding course takes 6 months to a year to complete. Still it is possible in a 2 hour class to gain enough information to safely operate simple welding equipment. Once armed with this knowledge, students are free to explore the subject on their own. Students will get a chance to try their hand in both gas and arc welding processes. We will also talk a little about metallurgy, shop setup, and purchasing welding supplies.",
+      "instructorId": 1
+    },
+    {
+      "title": "SCULPTING THE FIGURE IN CLAY",
+      "location": "Fire Arts Center of Chicago",
+      "courseCategoryId": 1,
+      "description": "Will you make a masterpiece?  Gain experience sculpting the human form from life in the tradition of Rodin and Michelangelo. In this 3-hour intro experience, you will learn the basic traditional techniques for sculpting the human form while working from a live nude model. In this workshop, students will learn basic observational skills and figure sculpture techniques, as well as some anatomy. Although the skills covered take a lifetime to master, enough can be acquired in this class to allow students to continue learning on their own.",
+      "instructorId": 1
+    },
+    {
+      "title": "WATERCOLOR BASICS",
+      "location": "Bru Coffee Chicago",
+      "courseCategoryId": 1,
+      "description": "Have you ever wanted to learn how to paint with watercolors but are overwhelmed with where to start?  No art skills?  No worries! This 2.75 HOUR class is perfect for the complete beginner; an introductory class with all quality materials included!  At a comfortable pace, you will be introduced to different watercolor painting materials, understand what watercolors are made of, learn how to mix colors, practice a few painting techniques, and create one simple painting!  By pursuing watercolor painting, you will learn how pleasurable and relaxing this medium is and you will develop a way to exercise creativity.  This class is a great prequel to my other watercolor classes.  Come along with us and discover the joy of watercolor painting!",
+      "instructorId": 1
+    },
+    {
+      "title": "INTRO TO AKIDO",
+      "location": "Apartment Dojo",
+      "courseCategoryId": 1,
+      "description": "Self defense is the greatest gift you can give yourself or a love one. This class is an introduction to the Japanese martial art called Aikido. The term Aikido means Ki harmonizing way. Ki is the term that refers to the universal energizing principle similar to the Chinese Chi.  In the martial art of  Aikido, an opponent is defeated by leading his Ki in such a way that he defeats himself. Thus In Aikido paradoxically to attack is weak because the action of attacking gives the defender the means to defeat the hostile effort. This concept sets Aikido apart from all other martial arts forms. In addition, the use of an opponents force to subdue makes Aikido an ideal martial art for women and children.  It is indeed the way of the peaceful warrior. Although one can study Aikido for a lifetime, enough of the basic concepts and techniques of self-defense can be explored in a 2-hour workshop to quite possibly save a life.",
+      "instructorId": 1
     }
   ]
 }

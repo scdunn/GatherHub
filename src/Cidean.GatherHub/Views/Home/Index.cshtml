@@ -10,23 +10,27 @@
 <div class="row">
     <div class="col-md-12">
         <h2>Courses</h2>
-        <div>
+        <div class="row">
             @foreach (var course in Model)
             {
-                
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">@course.Title (@course.Category.Title)</h3>
-                </div>
-                <div class="panel-body">
-                    @course.Description
-                    <br /><br />
-                    <strong>Location: @course.Location</strong>
-                    @course.Instructor.FullName
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@course.Title </h3>
+                        </div>
+                        <div class="panel-body course-panel">
+                            @course.ShortDescription
+                            <br /><br />
+                            <strong>Location: @course.Location</strong>
+                            @course.Instructor.FullName
 
-                    <a class="btn btn-primary" asp-controller="register" asp-action="course" asp-route-id="@course.Id">Register for Course</a>
+                            </div>
+                        <div class="panel-footer">
+                            <a class="btn btn-primary" asp-controller="home" asp-action="course" asp-route-id="@course.Id">Register</a>
+                            <span class="label label-success">@course.Category.Title</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
             }
         </div>
     </div>

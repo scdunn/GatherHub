@@ -111,6 +111,9 @@
     <Content Update="Views\Auth\SignIn.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Home\Course.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Register\Confirmation.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

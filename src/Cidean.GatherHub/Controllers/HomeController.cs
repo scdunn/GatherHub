@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Cidean.GatherHub.Models;
 using Cidean.GatherHub.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -39,7 +40,21 @@ namespace Cidean.GatherHub.Controllers
 
             return View();
         }
+        public async Task<IActionResult> Course(int? id)
+        {
+            if (id == null)
+                return NotFound();
 
+
+            var course = await _work.Courses.GetAll()
+                .Include(p => p.Category)
+                .Include(p => p.Instructor)
+                .Include(p => p.CourseMembers)
+                .ThenInclude(p => p.Member)
+                .SingleAsync(p=>p.Id==id.Value);
+
+            return View(course);
+        }
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

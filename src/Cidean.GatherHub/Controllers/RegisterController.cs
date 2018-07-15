@@ -30,6 +30,11 @@ namespace Cidean.GatherHub.Controllers
             return registration;
         }
 
+        private void SetRegistration(Registration registration)
+        {
+            HttpContext.Session.Set<Registration>("REG", registration);
+        }
+
 
         public IActionResult Index()
         {
@@ -56,11 +61,24 @@ namespace Cidean.GatherHub.Controllers
 
             registration.Courses.Add(course);
 
-            HttpContext.Session.Set<Registration>("REG", registration);
+            SetRegistration(registration);
 
             return RedirectToAction(nameof(Index));
         }
 
+
+        public IActionResult Remove(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var registration = GetRegistration();
+            registration.Courses.Remove(registration.Courses.Single(m => m.Id == id.Value));
+            HttpContext.Session.Set<Registration>("REG", registration);
+
+            return RedirectToAction(nameof(Index));
+
+        }
 
         public IActionResult Verify()
         {

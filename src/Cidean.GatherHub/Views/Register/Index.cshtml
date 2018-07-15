@@ -5,6 +5,11 @@
 
 <div class="row">
     <div class="col-md-12">
+
+        @if(Model.Courses.Count() > 0)
+        { 
+
+
         <div class="table-responsive">
             <table class="table">
                 <tr>
@@ -12,18 +17,29 @@
                     <th>Instructor</th>
                     <th>Location</th>
                     <th>Meeting Time(s)</th>
+                    <th>Actions</th>
                 </tr>
 
 
         
         @foreach (var course in Model.Courses)
         {
-            <tr><td>@course.Title</td><td>@course.Instructor.FullName</td><td>@course.Location</td><td>@course.MeetingTimes</td></tr>
+            <tr><td>@course.Title</td><td>@course.Instructor.FullName</td><td>@course.Location</td><td>@course.MeetingTimes</td>
+                <td><a asp-controller="register" asp-action="remove" asp-route-id="@course.Id" class="btn btn-primary">Remove</a></td>
+                </tr>
 
         }
 
         </table>
 </div>
         <a asp-controller="register" asp-action="verify" class="btn btn-primary">Complete</a>
+        }
+        else
+        {
+            <p>
+                There are no courses selected for registration.
+            </p>
+
+        }
     </div>
 </div>

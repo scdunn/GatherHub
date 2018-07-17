@@ -16,8 +16,8 @@ namespace Cidean.GatherHub
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
+        private IConfiguration Configuration { get; }
+        private IHostingEnvironment Environment { get; }
 
         public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
@@ -40,16 +40,30 @@ namespace Cidean.GatherHub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Setup session configuration
+
+            services.AddDbContext<HubContext>(options =>
+                 options.UseSqlite("Filename=./hub.db"));
+
+            services.AddDbContext<ActivityContext>(options =>
+                 options.UseSqlite("Filename=./hub.db"));
+
+            //load typed appsettings as singleton service
+            services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
+            
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ILogger, ActivityLogger>();
+
+            var appSettings = new AppSettings();
+
+            //Configure Session
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.IdleTimeout = TimeSpan.FromSeconds(appSettings.SessionTimeout);
                 options.Cookie.HttpOnly = true;
             });
 
-
+            //Add cookie authentication configuration
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                  .AddCookie("admin",
                     options =>
@@ -68,16 +82,7 @@ namespace Cidean.GatherHub
                     });
 
           
-            services.AddDbContext<HubContext>(options =>
-                 options.UseSqlite("Filename=./hub.db"));
-
-            services.AddDbContext<ActivityContext>(options =>
-                 options.UseSqlite("Filename=./hub.db"));
-
-            //load typed appsettings as singleton service
-            services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ILogger, ActivityLogger>();
+            
             services.AddMvc();
 
 

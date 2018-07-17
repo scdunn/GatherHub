@@ -260,3 +260,6 @@ paket-files/
 __pycache__/
 *.pyc
 /src/Cidean.GatherHub/Properties/PublishProfiles
+/src/Cidean.GatherHub/wwwroot/images/courses
+/src/Cidean.GatherHub/wwwroot/data/members.json
+/src/Cidean.GatherHub/wwwroot/data/data.xml

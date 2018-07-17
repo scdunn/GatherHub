@@ -44,7 +44,7 @@ namespace Cidean.GatherHub.Controllers
         {
             if (id == null)
                 return NotFound();
-
+            
 
             var course = await _work.Courses.GetAll()
                 .Include(p => p.Category)

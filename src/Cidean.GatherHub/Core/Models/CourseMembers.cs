@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// Copyright 2018 Cidean and Chris Dunn.  All rights reserved.
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Core.Models
 {
+    /// <summary>
+    /// Represents a Member registered for a course (Bridge object/table).
+    /// </summary>
     public class CourseMember
     {
         public int CourseId { get; set; }
@@ -14,22 +19,6 @@ namespace Cidean.GatherHub.Core.Models
         public int MemberId { get; set; }
         public Member Member { get; set; }
 
-        public class CourseMemberConfig : IEntityTypeConfiguration<CourseMember>
-        {
-            public void Configure(EntityTypeBuilder<CourseMember> builder)
-            {
-                builder
-                    .HasKey(p => new { p.CourseId, p.MemberId });
-                builder
-                    .HasOne(p => p.Course)
-                    .WithMany(p => p.CourseMembers)
-                    .HasForeignKey(p => p.CourseId);
-                builder
-                    .HasOne(p => p.Member)
-                    .WithMany(p => p.CourseMembers)
-                    .HasForeignKey(p => p.MemberId);
-            }
-        }
     }
 
 

@@ -9,9 +9,13 @@ namespace Cidean.GatherHub.Core.Data
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        //Data context
         private readonly HubContext _hubContext;
+
+        //Activity logger
         public ILogger Logger { get; }
 
+        //Repositories
         public IRepository<Course> Courses { get; private set; }
         public IRepository<CourseCategory> CourseCategories { get; private set; }
         public IRepository<AdminUser> AdminUsers { get; private set; }
@@ -21,8 +25,8 @@ namespace Cidean.GatherHub.Core.Data
 
         public UnitOfWork(HubContext hubContext, ILogger logger)
         {
-            //build repositories
-            this._hubContext = hubContext;
+            //initialize data context and repositories
+            _hubContext = hubContext;
             Courses = new Repository<Course>(_hubContext);
             CourseCategories = new Repository<CourseCategory>(_hubContext);
             AdminUsers = new Repository<AdminUser>(_hubContext);
@@ -30,33 +34,28 @@ namespace Cidean.GatherHub.Core.Data
             CourseMembers = new Repository<CourseMember>(_hubContext);
             ActivityLogItems = new Repository<ActivityLogItem>(_hubContext);
 
+            //set activity logger
             Logger = logger;
 
         }
-
-
-
+        
         public async Task Save()
         {
             await _hubContext.SaveChangesAsync();
         }
         
-
-
+        //indicates object is disposed already
         private bool disposed = false;
         
         protected virtual void Dispose(bool disposing)
         {
-            if(!this.disposed)
+            if(!disposed)
             {
                 if(disposing)
-                {
                     _hubContext.Dispose();
-                }
             }
 
-            this.disposed = true;
-
+            disposed = true;
         }
 
         public void Dispose()

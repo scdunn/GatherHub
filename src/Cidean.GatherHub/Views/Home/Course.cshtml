@@ -4,24 +4,33 @@
 }
 
 
-<div class="row">
-    <div class="col-md-8">
-        <h1>@Model.Title</h1>
-        <p>
-            @Model.Description
-        </p>
-        <p>
-            <strong>Instructor:</strong> @Model.Instructor.FullName
-        </p>
+<div class="row img-rounded" style="background-color:#000; padding:20px;">
+    <div class="col-md-6">
+        <img src="@Model.ImageUrl" class="img-rounded pull-left" style="margin: 0 30px 30px 0;" />
+
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body">
+                <h1>@Model.Title</h1>
+                <h4>Date(s): 1/1/19 - 1/15/19</h4>
+                <h4>Times: MWF 1pm - 2pm</h4>
+                <div class="row"><div class="col-md-12"><h4>Location:<br />@Model.Location</h4></div></div>
+                <div class="row"><div class="col-md-12"><h4>Category:<br />@Model.Category.Title</h4></div></div>
                 <a asp-controller="register" asp-action="course" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Register</a>
-                <div class="row"><div class="col-md-12"><strong>Location:</strong><br/>@Model.Location</div></div>
-                <div class="row"><div class="col-md-12"><strong>Category:</strong><br />@Model.Category.Title</div></div>
+
             </div>
         </div>
 
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Raw(Model.Description)
+
+        <p>
+            <strong>Instructor:</strong> @Model.Instructor.FullName
+        </p>
     </div>
 </div>

@@ -7,6 +7,7 @@ using Cidean.GatherHub.Core.Helpers;
 using Cidean.GatherHub.Core.Models;
 using Cidean.GatherHub.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -27,8 +28,14 @@ namespace Cidean.GatherHub.Controllers
             if (registration == null)
             {
                 registration = new Registration();
+                if (User.Identity.IsAuthenticated)
+                {
+                    registration.MemberId = Int32.Parse(User.Claims.Single(m => m.Type == "id").Value);
+                }
                 _work.Logger.Log($"New Registration created.");
             }
+    
+
             return registration;
         }
 
@@ -38,24 +45,29 @@ namespace Cidean.GatherHub.Controllers
         }
 
 
+        [Authorize]
         public IActionResult Index()
         {
             var registration = GetRegistration();
             return View(registration);
         }
 
-        
+        [Authorize]
         public async Task<IActionResult> Course(int? id)
         {
 
             if (id == null)
                 return NotFound();
+        
 
             var registration = GetRegistration();
             
             //check for existing course registration to prevent duplicates
             if (registration.Courses.Any(p => p.Id == id.Value))
+            {
+                TempData["CourseMessage"] = "You all already registered for this course.";
                 return RedirectToAction(nameof(Index));
+            }
 
             var course = _work.Courses.GetAll()
                 .Include(p => p.Instructor)
@@ -71,7 +83,7 @@ namespace Cidean.GatherHub.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [Authorize]
         public IActionResult Remove(int? id)
         {
             if (id == null)
@@ -85,35 +97,43 @@ namespace Cidean.GatherHub.Controllers
 
         }
 
-        public IActionResult Verify()
+        [Authorize]
+        public async Task<IActionResult> Review()
         {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction(nameof(SignIn), "Auth", new { returnUrl = "~/register/verify" });
-
-            return RedirectToAction(nameof(Complete));
-        }
-
-
-        public async Task<IActionResult> Complete()
-        {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction(nameof(SignIn), "Auth",new {returnUrl="~/register/verify" });
-
-            var memberId = Int32.Parse(User.Claims.Single(m => m.Type == "id").Value);
             var registration = GetRegistration();
-            var member = await _work.Members.GetById(memberId);
+            var member = await _work.Members.GetById(registration.MemberId);
 
             foreach (var course in registration.Courses)
-                member.AddCourse(course.Id);
+            {
+                //only add course for member if not already registered
+                if (!member.CourseMembers.Any(m => m.CourseId == course.Id))
+                    member.AddCourse(course.Id);
+            }
 
-           await _work.Save();
+            return View(registration);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Complete()
+        {   
+            var registration = GetRegistration();
+            var member = await _work.Members.GetById(registration.MemberId);
+
+            foreach (var course in registration.Courses)
+            { 
+                //only add course for member if not already registered
+                if(!member.CourseMembers.Any(m=>m.CourseId==course.Id))
+                    member.AddCourse(course.Id);
+            }
+
+            await _work.Save();
 
             HttpContext.Session.Remove("REG");
 
             return RedirectToAction(nameof(Confirmation));
         }
 
-
+        [Authorize]
         public IActionResult Confirmation()
         {
             return View();

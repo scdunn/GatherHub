@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
+using System.Xml.Linq;
 
 namespace Cidean.GatherHub.Core.Data
 {
@@ -16,6 +18,7 @@ namespace Cidean.GatherHub.Core.Data
         public class DataToSeed
         {
             public List<CourseCategory> Categories;
+            public List<Member> Members;
             public List<Course> Courses;
 
         }
@@ -25,6 +28,9 @@ namespace Cidean.GatherHub.Core.Data
         {
             DataToSeed data;
 
+
+
+            
             using (StreamReader r = new StreamReader(Path.Combine(env.WebRootPath, "data/seed.json")))
             {
                 var json = r.ReadToEnd();
@@ -41,7 +47,10 @@ namespace Cidean.GatherHub.Core.Data
             if (!context.Members.Any())
             {
 
+                foreach (var member in data.Members)
+                    member.SetPassword("password");
 
+                context.Members.AddRange(data.Members);
                 context.Members.Add(new Member("chris@cidean.com","Chris","Dunn", "password"));
                 context.Members.Add(new Member("megan@cidean.com", "Megan", "Dunn", "password"));
                 context.Members.Add(new Member("abby@cidean.com", "Abby", "Dunn", "password"));
@@ -56,20 +65,31 @@ namespace Cidean.GatherHub.Core.Data
             context.SaveChanges();
 
 
+            
             if (!context.Courses.Any())
             {
-                /*
-                foreach(var course in data.Courses)
-                {
-                    foreach(var member in context.Members)
+                
+                XDocument doc = new XDocument();
+                var dataFile = Path.Combine(env.WebRootPath, "data/data.xml");
+                if(File.Exists(dataFile))
+                { 
+                    doc = XDocument.Load(dataFile);
+                    foreach (var courseXml in doc.Descendants("Link"))
                     {
-                        course.AddMember(member.Id);
+                        var course = new Course();
+                        course.Description = courseXml.Element("Description").Value;
+                        course.Title = courseXml.Element("Title").Value;
+                        course.Location = courseXml.Element("Address").Value;
+                        course.ImageUrl = "/images/courses/" + courseXml.Element("Photo").Value;
+                        course.InstructorId = 1;
+                        course.CourseCategoryId = 1;
+                        context.Courses.Add(course);
                     }
                 }
-                */
 
-                context.Courses.AddRange(data.Courses);
             }
+            
+
 
             context.SaveChanges();
 

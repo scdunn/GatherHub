@@ -5,34 +5,46 @@
 
 <div class="row">
     <div class="col-md-12">
-
-        @if(Model.Courses.Count() > 0)
-        { 
-
-
-        <div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <th>Course</th>
-                    <th>Instructor</th>
-                    <th>Location</th>
-                    <th>Meeting Time(s)</th>
-                    <th>Actions</th>
-                </tr>
+        <div>
+            @if (TempData["CourseMessage"] != null)
+            {
+                @TempData["CourseMessage"];
+            }
+        </div>
 
 
-        
-        @foreach (var course in Model.Courses)
+
+        @if (Model.Courses.Count() > 0)
         {
-            <tr><td>@course.Title</td><td>@course.Instructor.FullName</td><td>@course.Location</td><td>@course.MeetingTimes</td>
-                <td><a asp-controller="register" asp-action="remove" asp-route-id="@course.Id" class="btn btn-primary">Remove</a></td>
-                </tr>
 
-        }
 
-        </table>
-</div>
-        <a asp-controller="register" asp-action="verify" class="btn btn-primary">Complete</a>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>Course</th>
+                        <th>Instructor</th>
+                        <th>Location</th>
+                        <th>Meeting Time(s)</th>
+                        <th>Actions</th>
+                    </tr>
+
+
+
+                    @foreach (var course in Model.Courses)
+                    {
+                        <tr>
+                            <td>@course.Title</td>
+                            <td>@course.Instructor.FullName</td>
+                            <td>@course.Location</td>
+                            <td>@course.MeetingTimes</td>
+                            <td><a asp-controller="register" asp-action="remove" asp-route-id="@course.Id" class="btn btn-primary">Remove</a></td>
+                        </tr>
+
+                    }
+
+                </table>
+            </div>
+            <a asp-controller="register" asp-action="verify" class="btn btn-primary">Complete</a>
         }
         else
         {

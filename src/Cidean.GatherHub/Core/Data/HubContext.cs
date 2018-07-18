@@ -21,6 +21,8 @@ namespace Cidean.GatherHub.Core.Data
 
         public DbSet<CourseMember> CourseMembers { get; set; }
 
+        public DbSet<ActivityLogItem> ActivityLogItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

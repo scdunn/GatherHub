@@ -25,8 +25,10 @@ namespace Cidean.GatherHub.Controllers
         {
             var registration = HttpContext.Session.Get<Registration>("REG");
             if (registration == null)
+            {
                 registration = new Registration();
-
+                _work.Logger.Log($"New Registration created.");
+            }
             return registration;
         }
 
@@ -62,6 +64,9 @@ namespace Cidean.GatherHub.Controllers
             registration.Courses.Add(course);
 
             SetRegistration(registration);
+
+
+            _work.Logger.Log($"Course: {course.Title} added to registration. ");
 
             return RedirectToAction(nameof(Index));
         }

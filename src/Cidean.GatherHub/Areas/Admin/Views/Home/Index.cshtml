@@ -1,8 +1,13 @@
-﻿
+﻿@model IEnumerable<Cidean.GatherHub.Core.Models.ActivityLogItem>
 @{
     ViewData["Title"] = "Index";
 }
 
 @section PageHeader {Dashboard}
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.Message</li>
 
-
+    }
+</ul>

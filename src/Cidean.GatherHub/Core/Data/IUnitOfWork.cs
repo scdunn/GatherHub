@@ -10,8 +10,12 @@ namespace Cidean.GatherHub.Core.Data
         IRepository<AdminUser> AdminUsers { get; }
         IRepository<Member> Members { get; }
         IRepository<CourseMember> CourseMembers { get; }
+        IRepository<ActivityLogItem> ActivityLogItems { get; }
+
+        ILogger Logger { get; }
 
         Task Save();
         void Dispose();
+        
     }
 }

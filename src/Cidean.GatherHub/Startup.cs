@@ -67,14 +67,20 @@ namespace Cidean.GatherHub
                         options.Cookie.Name = "ClientCookieAuth";
                     });
 
+          
+            services.AddDbContext<HubContext>(options =>
+                 options.UseSqlite("Filename=./hub.db"));
+
+            services.AddDbContext<ActivityContext>(options =>
+                 options.UseSqlite("Filename=./hub.db"));
+
             //load typed appsettings as singleton service
             services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-
+            services.AddTransient<ILogger, ActivityLogger>();
             services.AddMvc();
 
-            services.AddDbContext<HubContext>(options =>
-                 options.UseSqlite("Filename=./hub.db"));
+
 
         }
 

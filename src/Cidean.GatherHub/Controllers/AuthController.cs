@@ -46,6 +46,7 @@ namespace Cidean.GatherHub.Controllers
             //invalid sign in
             if(!isValid)
             {
+                _work.Logger.Log($"Sign In Failure.");
                 ModelState.AddModelError(string.Empty, "Invalid Username and/or Password.");
                 signInModel.IsValid = false;
                 return View(signInModel);
@@ -54,6 +55,9 @@ namespace Cidean.GatherHub.Controllers
             //valid sign in
             if (isValid)
             {
+
+                _work.Logger.Log($"Sign In for {user.EmailAddress}");
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.EmailAddress , ClaimValueTypes.String, "GatherHub"),
@@ -87,6 +91,7 @@ namespace Cidean.GatherHub.Controllers
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            _work.Logger.Log($"Sign out for {User.Identity.Name}");
             return RedirectToAction(nameof(SignIn));
         }
 

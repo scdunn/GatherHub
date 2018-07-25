@@ -112,6 +112,9 @@
     <Content Update="Views\Account\Denied.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Account\CreateAccount.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Account\SignIn.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

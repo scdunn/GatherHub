@@ -1,7 +1,11 @@
 ﻿.course-panel{
     height:200px !important;
 }
-
+.panel-heading {
+    height: 55px;
+}
+.panel-title {
+font-weight:bold;}
 .course-review {
 
 }

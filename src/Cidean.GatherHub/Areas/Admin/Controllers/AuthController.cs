@@ -28,7 +28,7 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn([Bind("Username","Password")] SignInModel signInModel)
+        public async Task<IActionResult> SignIn([Bind("Username","Password")] AdminSignInModel signInModel)
         {
             if(!ModelState.IsValid)
             {

@@ -29,28 +29,89 @@ namespace Cidean.GatherHub.Controllers
 
         public IActionResult SignIn(string returnUrl)
         {
-            var signInModel = new SignInModel() { ReturnUrl = returnUrl };
+            var signInModel = new MemberSignInModel() { ReturnUrl = returnUrl };
 
             return View(signInModel);
         }
 
+        private async Task DoSignIn(Member member)
+        {
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, member.EmailAddress , ClaimValueTypes.String, "GatherHub"),
+                    new Claim("id", member.Id.ToString() , ClaimValueTypes.String, "GatherHub")
+                };
+
+            var identity = new ClaimsIdentity(claims, "Password");
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
+                    AllowRefresh = false,
+                    IsPersistent = false
+                });
+        }
+
+
+        public IActionResult CreateAccount(string returnUrl)
+        {
+            var model = new MemberCreateModel() { ReturnUrl = returnUrl };
+
+            return View(model);
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn([Bind("Username","Password", "ReturnUrl")] SignInModel signInModel)
+        public async Task<IActionResult> CreateAccount([Bind("EmailAddress","FirstName","LastName","Password", "ReturnUrl")] MemberCreateModel createModel)
         {
             if(!ModelState.IsValid)
             {
                 return View();
             }
 
-            Member user = _work.Members.GetAll().SingleOrDefault(m => m.EmailAddress == signInModel.Username);
+
+            Member member = new Member();
+            member.EmailAddress = createModel.EmailAddress;
+            member.FirstName = createModel.FirstName;
+            member.LastName = createModel.LastName;
+            member.SetPassword(createModel.Password);
+
+
+            _work.Members.Insert(member);
+            await _work.Save();
+
+            _work.Logger.Log($"Sign In for {member.EmailAddress}");
+
+            await DoSignIn(member);
+
+            if (!string.IsNullOrEmpty(createModel.ReturnUrl))
+                return Redirect(createModel.ReturnUrl);
+
+            return RedirectToAction("Index", "Home");
+
+            
+        }
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignIn([Bind("EmailAddress", "Password", "ReturnUrl")] MemberSignInModel signInModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Member member = _work.Members.GetAll().SingleOrDefault(m => m.EmailAddress == signInModel.EmailAddress);
             bool isValid = true;
-            if (user == null)
+            if (member == null)
                 isValid = false;
-            else if(!user.IsValidPassword(signInModel.Password))
+            else if (!member.IsValidPassword(signInModel.Password))
                 isValid = false;
 
             //invalid sign in
-            if(!isValid)
+            if (!isValid)
             {
                 _work.Logger.Log($"Sign In Failure.");
                 ModelState.AddModelError(string.Empty, "Invalid Username and/or Password.");
@@ -62,37 +123,22 @@ namespace Cidean.GatherHub.Controllers
             if (isValid)
             {
 
-                _work.Logger.Log($"Sign In for {user.EmailAddress}");
+                _work.Logger.Log($"Sign In for {member.EmailAddress}");
 
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.EmailAddress , ClaimValueTypes.String, "GatherHub"),
-                    new Claim("id", user.Id.ToString() , ClaimValueTypes.String, "GatherHub")
-                };
-
-                var identity = new ClaimsIdentity(claims, "Password");
-                var principal = new ClaimsPrincipal(identity);
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    principal,
-                    new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
-                        AllowRefresh = false,
-                        IsPersistent = false
-                    });
+                await DoSignIn(member);
 
                 if (!string.IsNullOrEmpty(signInModel.ReturnUrl))
                     return Redirect(signInModel.ReturnUrl);
 
                 return RedirectToAction("Index", "Home");
-                
+
             }
-            
-            
+
+
 
             return RedirectToAction(nameof(Denied));
         }
+
 
         public async Task<IActionResult> SignOut()
         {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Models
 {
-    public class SignInModel
+    public class AdminSignInModel
     {
         public bool IsValid { get; set; } = true;
         public string Username { get; set; }

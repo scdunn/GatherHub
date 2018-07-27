@@ -56,12 +56,6 @@ namespace Cidean.GatherHub.Core.Data
                 context.Members.Add(new Member("abby@cidean.com", "Abby", "Dunn", "password"));
             }
 
-            
-            if (!context.CourseCategories.Any())
-            {
-                context.CourseCategories.AddRange(data.Categories);
-            }
-
             context.SaveChanges();
 
 
@@ -74,6 +68,17 @@ namespace Cidean.GatherHub.Core.Data
                 if(File.Exists(dataFile))
                 { 
                     doc = XDocument.Load(dataFile);
+
+                    foreach(var categoryXml in doc.Descendants("Category").ToList().Select(m => m.Value).Distinct())
+                    {
+                        var category = new CourseCategory();
+                        category.Title = categoryXml;
+                        context.CourseCategories.Add(category);
+
+                    }
+                    context.SaveChanges();
+
+                    var rnd = new Random();
                     foreach (var courseXml in doc.Descendants("Link"))
                     {
                         var course = new Course();
@@ -81,17 +86,18 @@ namespace Cidean.GatherHub.Core.Data
                         course.Title = courseXml.Element("Title").Value;
                         course.Location = courseXml.Element("Address").Value;
                         course.ImageUrl = "/images/courses/" + courseXml.Element("Photo").Value;
-                        course.InstructorId = 1;
-                        course.CourseCategoryId = 1;
+                        course.InstructorId = context.Members.Find(rnd.Next(1,50)).Id;
+                        course.CourseCategoryId = context.CourseCategories.Single(m=>m.Title== courseXml.Element("Category").Value).Id;
                         context.Courses.Add(course);
                     }
+                    context.SaveChanges();
                 }
 
             }
             
 
 
-            context.SaveChanges();
+            
 
 
           

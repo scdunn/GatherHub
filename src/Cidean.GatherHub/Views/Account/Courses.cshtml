@@ -36,7 +36,7 @@
                             <td>@course.Instructor.FullName</td>
                             <td>@course.Location</td>
                             <td>@course.MeetingTimes</td>
-                            <td><a asp-controller="register" asp-action="remove" asp-route-id="@course.Id" class="btn btn-danger">Remove</a></td>
+                            <td><a asp-controller="account" asp-action="unregister" asp-route-id="@course.Id" class="btn btn-danger">Unregister</a></td>
                         </tr>
 
                     }

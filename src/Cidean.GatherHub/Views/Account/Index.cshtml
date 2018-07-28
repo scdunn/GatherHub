@@ -1,7 +1,44 @@
-﻿
+﻿@model Cidean.GatherHub.Core.Models.Member
 @{
+    ViewData["Title"] = "Login";
     Layout = "_Account";
-    ViewData["Title"] = "My Account";
 }
 
-<h2>Settings</h2>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Update Settings/Profile</h2>
+        <form asp-controller="Account" asp-action="Index" method="post">
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div class="well bg-danger">
+                    Invalid username and/or password.
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TempPassword" class="control-label"></label>
+                <input asp-for="TempPassword" type="password" class="form-control" />
+                <span asp-validation-for="TempPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

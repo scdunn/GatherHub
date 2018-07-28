@@ -13,7 +13,7 @@ namespace Cidean.GatherHub.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [Required]
+        [Required, EmailAddress]
         public string EmailAddress { get; set; }
         [Required]
         public string Password { get; set; }

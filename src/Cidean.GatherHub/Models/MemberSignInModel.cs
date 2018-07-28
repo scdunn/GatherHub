@@ -9,7 +9,7 @@ namespace Cidean.GatherHub.Models
     public class MemberSignInModel
     {
         public bool IsValid { get; set; } = true;
-        [Required]
+        [Required, EmailAddress]
         public string EmailAddress { get; set; }
         [Required]
         public string Password { get; set; }

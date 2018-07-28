@@ -22,10 +22,40 @@ namespace Cidean.GatherHub.Controllers
             _work = work;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var memberid = Int32.Parse(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
+            var member = await _work.Members.GetById(memberid);
+            return View(member);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index([Bind("EmailAddress", "FirstName", "LastName", "TempPassword", "ReturnUrl")] Member memberModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+
+            var memberid = Int32.Parse(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
+            var member = await _work.Members.GetById(memberid);
+
+            member.EmailAddress = memberModel.EmailAddress;
+            member.FirstName = memberModel.FirstName;
+            member.LastName = memberModel.LastName;
+           
+            _work.Members.Update(member);
+            await _work.Save();
+            
+
+            return RedirectToAction("Index", "Account");
+
+
+        }
+
+
+
 
         public IActionResult SignIn(string returnUrl)
         {

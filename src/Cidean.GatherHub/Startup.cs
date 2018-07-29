@@ -51,7 +51,7 @@ namespace Cidean.GatherHub
             services.AddSingleton(this.Configuration.GetSection("AppSettings").Get<AppSettings>());
             
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ILogger, ActivityLogger>();
+            services.AddTransient<IActivityLogger, ActivityLogger>();
 
             var appSettings = services.BuildServiceProvider().GetService<AppSettings>();
 

@@ -12,7 +12,7 @@ namespace Cidean.GatherHub.Core.Data
         IRepository<CourseMember> CourseMembers { get; }
         IRepository<ActivityLogItem> ActivityLogItems { get; }
 
-        ILogger Logger { get; }
+        IActivityLogger Logger { get; }
 
         Task Save();
         void Dispose();

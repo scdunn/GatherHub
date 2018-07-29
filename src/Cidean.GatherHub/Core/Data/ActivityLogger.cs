@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Core.Data
 {
-    public class ActivityLogger : ILogger
+    public class ActivityLogger : IActivityLogger
     {
         private readonly ActivityContext _context;
 

@@ -13,7 +13,7 @@ namespace Cidean.GatherHub.Core.Data
         private readonly HubContext _hubContext;
 
         //Activity logger
-        public ILogger Logger { get; }
+        public IActivityLogger Logger { get; }
 
         //Repositories
         public CourseRepository Courses { get; private set; }
@@ -23,7 +23,7 @@ namespace Cidean.GatherHub.Core.Data
         public IRepository<CourseMember> CourseMembers { get; private set; }
         public IRepository<ActivityLogItem> ActivityLogItems { get; private set; }
 
-        public UnitOfWork(HubContext hubContext, ILogger logger)
+        public UnitOfWork(HubContext hubContext, IActivityLogger logger)
         {
             //initialize data context and repositories
             _hubContext = hubContext;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Core.Data
 {
-    public interface ILogger
+    public interface IActivityLogger
     {
         void Log(string message);
     }

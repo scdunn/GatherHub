@@ -39,6 +39,21 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                 .ToListAsync());
         }
 
+        public IActionResult Roster(int? id)
+        {
+
+            if (!id.HasValue)
+                return NotFound();
+
+            return View( _work.Courses.GetAll()
+                .Include(m => m.CourseMembers)
+                .ThenInclude(m => m.Member)
+                .Single(m => m.Id == id.Value));
+
+
+
+        }
+
 
         public async Task<IActionResult> Create()
         {

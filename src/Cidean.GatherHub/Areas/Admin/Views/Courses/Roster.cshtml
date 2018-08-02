@@ -1,0 +1,38 @@
+﻿@model Cidean.GatherHub.Core.Models.Course
+
+
+@{
+    var students = Model.CourseMembers.Select(m => m.Member);
+}
+<h2>@Model.Title - Course Roster</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Last Name
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                E-mail Address
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in students)
+        {
+            <tr>
+                <td>
+                    @member.LastName
+                </td>
+                <td>
+                    @member.FirstName     
+                </td>
+                <td>
+                    @member.EmailAddress
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

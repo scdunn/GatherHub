@@ -32,7 +32,7 @@ namespace Cidean.GatherHub.Core.Models
         /// <summary>
         /// Returns join of First and Last name properties.
         /// </summary>
-        public string FullName { get { return FirstName + " " + LastName; } }
+        public virtual string FullName { get { return FirstName + " " + LastName; } }
 
 
         /// <summary>

@@ -75,6 +75,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Admin\Views\Courses\Roster.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\Members\Delete.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

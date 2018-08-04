@@ -14,11 +14,13 @@ namespace Cidean.GatherHub.Controllers
     public class RegisterController : Controller
     {
         private readonly IUnitOfWork _work;
+        private readonly Mailer _mailer;
 
 
-        public RegisterController(IUnitOfWork work)
+        public RegisterController(IUnitOfWork work, Mailer mailer)
         {
             _work = work;
+            _mailer = mailer;
         }
 
 
@@ -118,15 +120,26 @@ namespace Cidean.GatherHub.Controllers
         {   
             var registration = GetRegistration();
             var member = await _work.Members.GetById(registration.MemberId);
+            string coursesEmail = "";
 
             foreach (var course in registration.Courses)
-            { 
+            {
                 //only add course for member if not already registered
-                if(!member.CourseMembers.Any(m=>m.CourseId==course.Id))
+                if (!member.CourseMembers.Any(m => m.CourseId == course.Id))
+                {
                     member.AddCourse(course.Id);
+                    coursesEmail += "<li>" + course.Title + "</li>";
+                }
             }
 
             await _work.Save();
+
+            var tags = new Dictionary<string, string>();
+            tags.Add("FIRST_NAME", member.FirstName);
+            tags.Add("COURSES", coursesEmail);
+
+            await _mailer.SendMail("register", member.EmailAddress, member.FullName, tags);
+
 
             HttpContext.Session.Remove("REG");
 

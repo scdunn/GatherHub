@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Cidean.GatherHub.Core.Data;
+using Cidean.GatherHub.Core.Helpers;
 using Cidean.GatherHub.Core.Models;
 using Cidean.GatherHub.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -16,10 +17,12 @@ namespace Cidean.GatherHub.Controllers
     public class AccountController : Controller
     {
         private readonly IUnitOfWork _work;
+        private readonly Mailer _mailer;
 
-        public AccountController(IUnitOfWork work)
+        public AccountController(IUnitOfWork work, Mailer mailer)
         {
             _work = work;
+            _mailer = mailer;
         }
 
         public async Task<IActionResult> Index()
@@ -111,6 +114,13 @@ namespace Cidean.GatherHub.Controllers
 
             _work.Members.Insert(member);
             await _work.Save();
+
+
+            Dictionary<string, string> tags = new Dictionary<string, string>();
+            tags.Add("FIRST_NAME", member.FirstName);
+            tags.Add("EMAIL_ADDRESS", member.EmailAddress);
+
+            await _mailer.SendMail("welcome", member.EmailAddress, member.FullName, tags);
 
             _work.Logger.Log($"Sign In for {member.EmailAddress}");
 

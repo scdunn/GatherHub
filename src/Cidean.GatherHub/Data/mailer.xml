@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Emails>
+  <Email id="welcome">
+    <From>
+      <Address>gatherhub@cidean.com</Address>
+      <Name>Gather Hub</Name>
+    </From>
+    <Subject>Welcome to Gather Hub</Subject>
+    <HtmlContent>
+      <![CDATA[
+      <h2>Welcome to Gather Hub, {FIRST_NAME}!</h2>
+      <p>
+      You have successfully registered as a member and are now able to register for courses on our site.  You will sign-in with
+      the email address ({EMAIL_ADDRESS}) you provided and password selected during registration.  Let us know if you have any questions.
+      </p>
+      <p>
+      Thanks,
+      <br/>Gather Hub Team
+      </p>
+      ]]>
+    </HtmlContent>
+    <TextContent>
+      
+    </TextContent>
+  </Email>
+  <Email id="register">
+    <From>
+      <Address>gatherhub@cidean.com</Address>
+      <Name>Gather Hub</Name>
+    </From>
+    <Subject>Your Courses</Subject>
+    <HtmlContent>
+      <![CDATA[
+      <h2>You have registered for courses, {FIRST_NAME}!</h2>
+      {COURSES}
+      ]]>
+    </HtmlContent>
+    <TextContent>
+
+    </TextContent>
+  </Email>
+</Emails>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cidean.GatherHub.Core.Data;
+using Cidean.GatherHub.Core.Helpers;
 using Cidean.GatherHub.Core.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -42,16 +43,17 @@ namespace Cidean.GatherHub
         {
 
             services.AddDbContext<HubContext>(options =>
-                 options.UseSqlite("Filename=./hub.db"));
+                 options.UseSqlite("Filename=./Data/hub.db"));
 
             services.AddDbContext<ActivityContext>(options =>
-                 options.UseSqlite("Filename=./hub.db"));
+                 options.UseSqlite("Filename=./Data/hub.db"));
 
             //load typed appsettings as singleton service
             services.AddSingleton(this.Configuration.GetSection("AppSettings").Get<AppSettings>());
-            
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IActivityLogger, ActivityLogger>();
+            services.AddTransient<Mailer, Mailer>();
 
             var appSettings = services.BuildServiceProvider().GetService<AppSettings>();
 

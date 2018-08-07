@@ -31,7 +31,7 @@ namespace Cidean.GatherHub.Core.Data
 
 
             
-            using (StreamReader r = new StreamReader(Path.Combine(env.WebRootPath, "data/seed.json")))
+            using (StreamReader r = new StreamReader(Path.Combine(env.ContentRootPath, "data/seed.json")))
             {
                 var json = r.ReadToEnd();
                 data = JsonConvert.DeserializeObject<DataToSeed>(json);
@@ -51,9 +51,9 @@ namespace Cidean.GatherHub.Core.Data
                     member.SetPassword("password");
 
                 context.Members.AddRange(data.Members);
-                context.Members.Add(new Member("chris@cidean.com","Chris","Dunn", "password"));
-                context.Members.Add(new Member("megan@cidean.com", "Megan", "Dunn", "password"));
-                context.Members.Add(new Member("abby@cidean.com", "Abby", "Dunn", "password"));
+                //context.Members.Add(new Member("chris@cidean.com","Chris","Dunn", "password"));
+                //context.Members.Add(new Member("megan@cidean.com", "Megan", "Dunn", "password"));
+                //context.Members.Add(new Member("abby@cidean.com", "Abby", "Dunn", "password"));
             }
 
             context.SaveChanges();
@@ -64,7 +64,7 @@ namespace Cidean.GatherHub.Core.Data
             {
                 
                 XDocument doc = new XDocument();
-                var dataFile = Path.Combine(env.WebRootPath, "data/data.xml");
+                var dataFile = Path.Combine(env.ContentRootPath, "data/data.xml");
                 if(File.Exists(dataFile))
                 { 
                     doc = XDocument.Load(dataFile);

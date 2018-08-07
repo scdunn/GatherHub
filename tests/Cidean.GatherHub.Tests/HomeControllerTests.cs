@@ -15,13 +15,22 @@ namespace Cidean.GatherHub.Tests
     public class HomeControllerTests
     {
 
-        private IUnitOfWork GetUnitOfWork()
+
+
+        public HomeControllerTests()
+        {
+
+        }
+
+
+
+        private UnitOfWork GetUnitOfWork(string dbname)
         {
             var hubOptions = new DbContextOptionsBuilder<HubContext>()
-              .UseInMemoryDatabase(databaseName: "HUB")
+              .UseInMemoryDatabase(databaseName: $"HUB_{dbname}")
               .Options;
             var logOptions = new DbContextOptionsBuilder<ActivityContext>()
-               .UseInMemoryDatabase(databaseName: "LOG")
+               .UseInMemoryDatabase(databaseName: $"LOG_{dbname}")
                .Options;
 
             var work = new UnitOfWork(new HubContext(hubOptions), new ActivityLogger(new ActivityContext(logOptions)));
@@ -36,20 +45,32 @@ namespace Cidean.GatherHub.Tests
             return work;
         }
 
+        [Fact]
+        public void SomeMockTest()
+        {
+            var member = new Mock<Member>();
+
+            member.SetupGet(m => m.FullName).Returns("Jimmy Hendrix");
+
+            Assert.Equal("Jimmy Hendrix", member.Object.FullName);
+
+        }
+
 
         [Fact]
         public void About_GetViewDataMessage_IsAboutUs()
         {
-            //Arrange
-            var work = GetUnitOfWork();
-            var controller = new HomeController(work);
+            //Arrange       
+            using (UnitOfWork work = GetUnitOfWork(nameof(this.About_GetViewDataMessage_IsAboutUs)))
+            { 
+                var controller = new HomeController(work);
 
-            //Act
-            var result = controller.About() as ViewResult;
+                //Act
+                var result = controller.About() as ViewResult;
 
-            //Assert
-            Assert.Equal("About Us",result.ViewData["Message"].ToString()  );
-
+                //Assert
+                Assert.Equal("About Us",result.ViewData["Message"].ToString()  );
+            }
 
 
         }
@@ -58,18 +79,19 @@ namespace Cidean.GatherHub.Tests
         public void Index_Get_OnlyModelIsTestCourse()
         {
             //Arrange
-            var work = GetUnitOfWork();
-            var controller = new HomeController(work);
+            using (UnitOfWork work = GetUnitOfWork(nameof(this.Index_Get_OnlyModelIsTestCourse)))
+            {
+                var controller = new HomeController(work);
 
-            //Act
-            var result = controller.Index() as ViewResult;
-            IQueryable<Course> model = (IQueryable<Course>)result.Model;
+                //Act
+                var result = controller.Index() as ViewResult;
+                IQueryable<Course> model = (IQueryable<Course>)result.Model;
 
-            //Assert
-            Assert.True(model.Count() == 1);
-            Assert.True(model.First().Title=="Test Course");
+                //Assert
+                Assert.True(model.Count() == 1);
+                Assert.True(model.First().Title == "Test Course");
 
-
+            }
             
         }
 

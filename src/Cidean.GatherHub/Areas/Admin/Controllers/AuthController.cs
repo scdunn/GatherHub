@@ -65,7 +65,7 @@ namespace Cidean.GatherHub.Areas.Admin.Controllers
                     principal,
                     new AuthenticationProperties
                     {
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
+                        ExpiresUtc = DateTime.UtcNow.AddSeconds(25),
                         AllowRefresh = false,
                         IsPersistent = false
                     });

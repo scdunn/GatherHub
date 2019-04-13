@@ -61,6 +61,7 @@ namespace Cidean.GatherHub
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(appSettings.SessionTimeout);
                 options.Cookie.HttpOnly = true;
+                
             });
 
             //Add cookie authentication configuration

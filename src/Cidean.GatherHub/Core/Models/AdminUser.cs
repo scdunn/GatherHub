@@ -50,6 +50,8 @@ namespace Cidean.GatherHub.Core.Models
         public AdminUser(string username, string password)
         {
             Username = username;
+            FirstName = username;
+            LastName = username;
             SetPassword(password);
         }
 

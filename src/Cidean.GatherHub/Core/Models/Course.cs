@@ -24,10 +24,10 @@ namespace Cidean.GatherHub.Core.Models
         [Required]
         public string Description { get; set; }
 
-        [Required, MaxLength(100)]
+        
         public string Location { get; set; }
 
-        [Required, MaxLength(50)]
+       
         public string MeetingTimes { get; set; }
 
         [Required]

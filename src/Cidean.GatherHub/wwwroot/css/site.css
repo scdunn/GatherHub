@@ -1,3 +1,22 @@
 ﻿.course-panel{
     height:200px !important;
 }
+
+#home-banner
+{
+    background-image:url("../images/banner.jpg");
+    width:1145px;
+    height:400px;
+}
+
+.navbar-inverse
+{
+    background-color:#003f80;
+    color:#fff;
+}
+
+    .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+        color: #fff;
+    }
+
+footer{ border-top:solid 1px #ccc; padding-top:20px; margin-top:20px;}

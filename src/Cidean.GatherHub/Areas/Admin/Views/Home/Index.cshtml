@@ -11,3 +11,32 @@
 
     }
 </ul>
+
+
+@section Scripts
+{
+<script type="text/javascript">
+function inactiveTimeout() {
+    var tmr;
+
+    window.onmousemove = resetTimeout;
+    window.onmousedown = resetTimeout;
+    window.onclick = resetTimeout;
+    window.onscroll = resetTimeout;
+    window.onkeypress = resetTimeout;
+    window.onload = resetTimeout;
+
+   function refresh() {
+          window.location = self.location.href;
+   }
+
+   function resetTimeout() {
+        clearTimeout(tmr);
+       tmr = setTimeout(refresh, 30000);
+       
+    }
+}
+inactiveTimeout();
+
+</script>
+}

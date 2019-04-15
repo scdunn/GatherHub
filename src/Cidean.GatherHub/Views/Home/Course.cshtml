@@ -6,26 +6,90 @@
 
 <div class="row img-rounded" style="background-color:#d1dee8; padding:20px;">
     <div class="col-md-5 img-rounded" style="background: url(@Model.ImageUrl); width:400px; height:400px;">
-        
+
     </div>
-    <div class="col-md-7">
+    
+    <div class="col-md-7 course-summary">
         <h1>@Model.Title</h1>
-        <h4>Date(s): 1/1/19 - 1/15/19</h4>
-        <h4>Times: MWF 1pm - 2pm</h4>
-        <div class="row"><div class="col-md-12"><h4>Location:<br />@Model.Location</h4></div></div>
-        <div class="row"><div class="col-md-12"><h4>Category:<br />@Model.Category.Title</h4></div></div>
+        <h4>@Model.Category.Title</h4>
+        <div>
+            <i class="fa fa-star "></i>
+            <i class="fa fa-star "></i>
+            <i class="fa fa-star "></i>
+            <i class="fa fa-star "></i>
+            <i class="fa fa-star-o "></i>
+        </div>
+        <div>
+            <h4>Instructor:</h4> @Model.Instructor.FullName
+        </div>
+        <div>
+            <h4>Date/Times:</h4> 1/1/19 - 1/15/19, MWF 1pm - 2pm
+        </div>
+        <div>
+        <h4>Location:</h4>@Model.Location
+            </div>
         <a asp-controller="register" asp-action="course" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Register</a>
-
-
     </div>
+    
+
 
 </div>
+
+</div>
+<h2>Course Description</h2>
 <div class="row">
     <div class="col-md-12">
         @Html.Raw(Model.Description)
-
-        <p>
-            <strong>Instructor:</strong> @Model.Instructor.FullName
-        </p>
     </div>
 </div>
+
+<div class="row course-review">
+    <div class="col-md-6">
+        <h2>Reviews</h2>
+        <div class="course-review">
+            <strong>John Lansing</strong>
+            on <em>4/6/2018</em>
+            <p>
+                This course was amazing.  I learned so much and had a wonderful time.  The instructor took the time to
+                make sure everyone in the course understood what was going on and was always avilable for questions.
+                I will definitely be taking this course again.
+            </p>
+        </div>
+        <div class="course-review">
+            <strong>Alice Harris</strong>
+            on <em>4/2/2018</em>
+            <p>
+                I had a blast and the instructor was great.  Can't wait to do another course soon.  Great job everyone.
+            </p>
+        </div>
+        <div class="course-review">
+            <strong>David Brown</strong>
+            on <em>8/4/2018</em>
+            <p>
+                Would definitely do this again.  Such an amazing experience.  Great people in class and I learned so much.  Thanks.
+            </p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>Location</h2>
+        <div class="mapouter">
+            <div class="gmap_canvas"><iframe width="100%" height="262" id="gmap_canvas" src="https://maps.google.com/maps?q=@Model.Location&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.emojilib.com"></a></div>
+            <style>
+                .mapouter {
+                    position: relative;
+                    text-align: right;
+                    height: 262px;
+                    width: 100%;
+                }
+
+                .gmap_canvas {
+                    overflow: hidden;
+                    background: none !important;
+                    height: 262px;
+                    width: 100%;
+                }
+            </style>
+        </div>
+    </div>
+
+

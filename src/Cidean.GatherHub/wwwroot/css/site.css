@@ -2,6 +2,18 @@
     height:200px !important;
 }
 
+.course-review {
+
+}
+
+h2{color:#003f80;}
+
+.course-summary > div h4{
+    font-weight:bold;
+}
+.fa-star, .fa-star-o {color:orange; font-size:1.2em;
+}
+
 #home-banner
 {
     background-image:url("../images/banner.jpg");

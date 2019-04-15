@@ -48,12 +48,12 @@ namespace Cidean.GatherHub
                  options.UseSqlite("Filename=./hub.db"));
 
             //load typed appsettings as singleton service
-            services.AddSingleton(Configuration.GetSection("AppSettings").Get<AppSettings>());
+            services.AddSingleton(this.Configuration.GetSection("AppSettings").Get<AppSettings>());
             
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ILogger, ActivityLogger>();
 
-            var appSettings = new AppSettings();
+            var appSettings = services.BuildServiceProvider().GetService<AppSettings>();
 
             //Configure Session
             services.AddDistributedMemoryCache();

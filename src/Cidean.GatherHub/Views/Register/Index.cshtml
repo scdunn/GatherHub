@@ -37,14 +37,15 @@
                             <td>@course.Instructor.FullName</td>
                             <td>@course.Location</td>
                             <td>@course.MeetingTimes</td>
-                            <td><a asp-controller="register" asp-action="remove" asp-route-id="@course.Id" class="btn btn-primary">Remove</a></td>
+                            <td><a asp-controller="register" asp-action="remove" asp-route-id="@course.Id" class="btn btn-danger">Remove</a></td>
                         </tr>
 
                     }
 
                 </table>
             </div>
-            <a asp-controller="register" asp-action="verify" class="btn btn-primary">Complete</a>
+            <a asp-controller="register" asp-action="complete" class="btn btn-success">Checkout</a>
+            <a asp-controller="home" asp-action="index" class="btn btn-primary">Find more Courses</a>
         }
         else
         {

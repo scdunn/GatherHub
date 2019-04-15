@@ -26,9 +26,17 @@
             <h4>Date/Times:</h4> 1/1/19 - 1/15/19, MWF 1pm - 2pm
         </div>
         <div>
-        <h4>Location:</h4>@Model.Location
-            </div>
-        <a asp-controller="register" asp-action="course" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Register</a>
+            <h4>Location:</h4>@Model.Location
+        </div>
+
+        @if (Model.CourseMembers.Count(m => m.Member.EmailAddress == @User.Identity.Name) == 0)
+        {
+            <a asp-controller="register" asp-action="course" asp-route-id="@Model.Id" class="btn btn-success btn-lg">Register</a>
+        }
+        else
+        {
+            <p><strong>You are already signed up for this course.</strong></p>
+        }
     </div>
     
 

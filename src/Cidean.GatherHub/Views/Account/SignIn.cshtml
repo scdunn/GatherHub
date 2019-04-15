@@ -9,7 +9,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Sign In</div>
             <div class="panel-body">
-                <form asp-controller="Auth" asp-action="SignIn" method="post">
+                <form asp-controller="Account" asp-action="SignIn" method="post">
                     <input type="hidden" asp-for="ReturnUrl" />
                     @if (ViewData.ModelState.ErrorCount > 0)
                     {

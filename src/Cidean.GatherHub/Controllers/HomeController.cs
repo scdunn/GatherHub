@@ -4,6 +4,10 @@ using Cidean.GatherHub.Models;
 using Cidean.GatherHub.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Cidean.GatherHub.Controllers
 {
@@ -55,6 +59,9 @@ namespace Cidean.GatherHub.Controllers
 
             return View(course);
         }
+
+
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

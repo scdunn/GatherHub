@@ -16,7 +16,7 @@ namespace Cidean.GatherHub.Core.Data
         public ILogger Logger { get; }
 
         //Repositories
-        public IRepository<Course> Courses { get; private set; }
+        public CourseRepository Courses { get; private set; }
         public IRepository<CourseCategory> CourseCategories { get; private set; }
         public IRepository<AdminUser> AdminUsers { get; private set; }
         public IRepository<Member> Members { get; private set; }
@@ -27,7 +27,7 @@ namespace Cidean.GatherHub.Core.Data
         {
             //initialize data context and repositories
             _hubContext = hubContext;
-            Courses = new Repository<Course>(_hubContext);
+            Courses = new CourseRepository(_hubContext);
             CourseCategories = new Repository<CourseCategory>(_hubContext);
             AdminUsers = new Repository<AdminUser>(_hubContext);
             Members = new Repository<Member>(_hubContext);

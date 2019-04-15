@@ -33,14 +33,14 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-controller="Auth" asp-action="SignOut">Sign Out @User.Identity.Name</a></li>
+                        <li><a asp-controller="Account" asp-action="Index">My Account</a></li>
+                        <li><a asp-controller="Account" asp-action="SignOut">Sign Out @User.Identity.Name</a></li>
                     }
                     else
                     {
-                        <li><a asp-controller="Auth" asp-action="SignIn">Sign In</a></li>
+                        <li><a asp-controller="Account" asp-action="SignIn">Sign In</a></li>
 
 
                     }
@@ -58,7 +58,7 @@
         </div>
     <footer class="text-center">
         Copyright &copy; 2018 GatherHub by Cidean Software.  All rights reserved.<br/>
-        Powered by GatherHub Software.
+        Powered by GatherHub Software. <a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Sign-In</a>
     </footer>
 
     </div>

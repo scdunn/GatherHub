@@ -9,16 +9,22 @@ using Cidean.GatherHub.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cidean.GatherHub.Controllers
 {
-    public class AuthController : Controller
+    public class AccountController : Controller
     {
         private readonly IUnitOfWork _work;
 
-        public AuthController(IUnitOfWork work)
+        public AccountController(IUnitOfWork work)
         {
             _work = work;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
 
         public IActionResult SignIn(string returnUrl)
@@ -102,6 +108,18 @@ namespace Cidean.GatherHub.Controllers
         }
 
 
+        public IActionResult Courses()
+        {
+
+            var memberid = Int32.Parse(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
+
+
+            var courses = _work.Courses.GetMemberCourses(memberid).Include(m => m.Instructor).Include(m => m.Category);
+
+            return View(courses);
+
+
+        }
     }
 
 

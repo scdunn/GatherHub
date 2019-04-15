@@ -5,7 +5,7 @@ namespace Cidean.GatherHub.Core.Data
 {
     public interface IUnitOfWork
     {
-        IRepository<Course> Courses { get; }
+        CourseRepository Courses { get; }
         IRepository<CourseCategory> CourseCategories { get; }
         IRepository<AdminUser> AdminUsers { get; }
         IRepository<Member> Members { get; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Cidean.GatherHub.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,26 @@ using System.Threading.Tasks;
 
 namespace Cidean.GatherHub.Core.Data
 {
+
+    public class CourseRepository: Repository<Course>, IRepository<Course>
+    {
+        public CourseRepository(DbContext dbContext): base(dbContext)
+        {
+         
+        }
+
+        public IQueryable<Course> GetMemberCourses(int memberId)
+        {
+            return _dbSet.Where(m => m.CourseMembers.Count(mbr=> mbr.MemberId==memberId)>0).AsQueryable();
+        }
+    }
+
+
     public class Repository<T> : IRepository<T> where T : class
     {
 
-        private readonly DbContext _dbContext;
-        private DbSet<T> _dbSet;
+        protected readonly DbContext _dbContext;
+        protected DbSet<T> _dbSet;
 
         public Repository(DbContext dbContext)
         {

@@ -77,8 +77,8 @@ namespace Cidean.GatherHub
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                     options =>
                     {
-                        options.LoginPath = new PathString("/auth/signin");
-                        options.AccessDeniedPath = new PathString("/auth/denied");
+                        options.LoginPath = new PathString("/account/signin");
+                        options.AccessDeniedPath = new PathString("/account/denied");
                         options.Cookie.Name = "ClientCookieAuth";
                     });
 

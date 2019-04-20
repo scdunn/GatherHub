@@ -136,6 +136,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\hub.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\mailer.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

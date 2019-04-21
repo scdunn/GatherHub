@@ -43,10 +43,10 @@ namespace Cidean.GatherHub
         {
 
             services.AddDbContext<HubContext>(options =>
-                 options.UseSqlite("Filename=./Data/hub.db"));
+                 options.UseSqlite("Filename=./hub.db"));
 
             services.AddDbContext<ActivityContext>(options =>
-                 options.UseSqlite("Filename=./Data/hub.db"));
+                 options.UseSqlite("Filename=./hub.db"));
 
             //load typed appsettings as singleton service
             services.AddSingleton(this.Configuration.GetSection("AppSettings").Get<AppSettings>());
